@@ -12,3 +12,15 @@ totalGames INT,
 PRIMARY KEY (userID)
 
 )
+
+CREATE TABLE games
+(
+gameID INT NOT NULL AUTO_INCREMENT,
+state TEXT,
+startTime DATETIME NOT NULL,
+lastMove TIMESTAMP NOT NULL,
+finished TINYINT,
+PRIMARY KEY (gameID)
+
+)
+
