@@ -32,3 +32,18 @@ gameID int NOT NULL,
 FOREIGN KEY (userID) REFERENCES users(userID),
 FOREIGN KEY (gameID) REFERENCES games(gameID)
 )
+
+CREATE TABLE players
+(
+playerID int NOT NULL AUTO_INCREMENT,
+userID int NOT NULL,
+gameID int NOT NULL,
+state text,
+
+PRIMARY KEY (playerID),
+FOREIGN KEY (userID) REFERENCES users(userID),
+FOREIGN KEY (gameID) REFERENCES games(gameID)
+
+
+
+)
