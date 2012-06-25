@@ -24,3 +24,11 @@ PRIMARY KEY (gameID)
 
 )
 
+CREATE TABLE usersToGames
+(
+userID int NOT NULL,
+gameID int NOT NULL,
+
+FOREIGN KEY (userID) REFERENCES users(userID),
+FOREIGN KEY (gameID) REFERENCES games(gameID)
+)
