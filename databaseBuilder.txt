@@ -1,0 +1,14 @@
+CREATE TABLE users
+(
+userID INT NOT NULL AUTO_INCREMENT,
+nickName VARCHAR(255),
+age  TINYINT,
+gender CHAR(1),
+email VARCHAR(255) NOT NULL,
+os VARCHAR(255),
+lastDevice VARCHAR(255), 
+wins INT,
+totalGames INT,
+PRIMARY KEY (userID)
+
+)
