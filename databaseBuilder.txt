@@ -9,6 +9,7 @@ os VARCHAR(255),
 lastDevice VARCHAR(255), 
 wins INT,
 totalGames INT,
+
 PRIMARY KEY (userID)
 
 )
@@ -20,14 +21,15 @@ state TEXT,
 startTime DATETIME NOT NULL,
 lastMove TIMESTAMP NOT NULL,
 finished TINYINT,
+
 PRIMARY KEY (gameID)
 
 )
 
 CREATE TABLE usersToGames
 (
-userID int NOT NULL,
-gameID int NOT NULL,
+userID INT NOT NULL,
+gameID INT NOT NULL,
 
 FOREIGN KEY (userID) REFERENCES users(userID),
 FOREIGN KEY (gameID) REFERENCES games(gameID)
@@ -35,27 +37,21 @@ FOREIGN KEY (gameID) REFERENCES games(gameID)
 
 CREATE TABLE players
 (
-playerID int NOT NULL AUTO_INCREMENT,
-userID int NOT NULL,
-gameID int NOT NULL,
+playerID INT NOT NULL AUTO_INCREMENT,
+userID INT NOT NULL,
+gameID INT NOT NULL,
 state text,
 
 PRIMARY KEY (playerID),
 FOREIGN KEY (userID) REFERENCES users(userID),
 FOREIGN KEY (gameID) REFERENCES games(gameID)
-
-
-
 )
 
 CREATE TABLE login
 (
-userID int NOT NULL,
-
+userID INT NOT NULL,
+password VARCHAR(255),
 
 PRIMARY KEY (userID),
 FOREIGN KEY (userID) REFERENCES users(userID)
-
-
-
 )
