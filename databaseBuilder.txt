@@ -47,3 +47,15 @@ FOREIGN KEY (gameID) REFERENCES games(gameID)
 
 
 )
+
+CREATE TABLE login
+(
+userID int NOT NULL,
+
+
+PRIMARY KEY (userID),
+FOREIGN KEY (userID) REFERENCES users(userID)
+
+
+
+)
