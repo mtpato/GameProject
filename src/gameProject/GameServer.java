@@ -8,6 +8,9 @@ public class GameServer {
 	
 	private int port = 4356;	
 	private ServerSocket serverSocket;
+	private ErrorLogger log;
+	private boolean running;
+	
 	
 	/**
 	 * @param args
@@ -18,6 +21,12 @@ public class GameServer {
 	}
 
 	public void run() {
+		log = new ErrorLogger("errorLog.txt", this.getClass().toString());
+		
+		running = true;
+		
+		
+		
 		initServer();
 		
 	}
@@ -27,22 +36,26 @@ public class GameServer {
 			serverSocket = new ServerSocket(port);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			log.log("problem creating server socket trace: " + e.toString());
 			e.printStackTrace();
 		}
         
 		
-		
-        try {
-			Socket socket = serverSocket.accept();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while(running) {
+			
+	        try {
+				Socket socket = serverSocket.accept();
+				
+				
+			} catch (IOException e) {
+				log.log("problem accepting connection trace: " + e.toString());
+				e.printStackTrace();
+			}
 		}
+		
+
 		
 	}
 	
-	private void listenToPort() {
-		
-	}
 
 }
