@@ -1,6 +1,10 @@
 package gameProject;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -21,10 +25,10 @@ public class GameServer {
 	}
 
 	public void run() {
-		log = new ErrorLogger("errorLog.txt", this.getClass().toString());
+		log = new ErrorLogger("errorLog.txt", this.getClass().toString());//init the error logger
 		
 		running = true;
-		
+		System.out.println("RUNNING");
 		
 		
 		initServer();
@@ -43,8 +47,12 @@ public class GameServer {
 		
 		while(running) {
 			
+			System.out.println("waiting for con");
 	        try {
 				Socket socket = serverSocket.accept();
+				
+				System.out.println("got con");
+				talk(socket);
 				
 				
 			} catch (IOException e) {
@@ -55,6 +63,35 @@ public class GameServer {
 		
 
 		
+	}
+
+	private void talk(Socket socket) {
+	    BufferedReader input;
+	    BufferedWriter output;
+	    
+        try {
+			input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			output = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+			
+			
+			System.out.println(input.readLine());
+			
+			output.write("OK I HEAR YOU");
+			output.write(("\n"));
+			output.flush();
+			
+			System.out.println(input.readLine());
+			
+			System.out.println("DONE");
+			
+        } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
+        
+        
 	}
 	
 
