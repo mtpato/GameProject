@@ -1,17 +1,47 @@
 package gameProject;
 
-public class GameServer {
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
+public class GameServer {
+	
+	private int port = 4356;	
+	private ServerSocket serverSocket;
+	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		new GameServer().run();
 
 	}
 
 	public void run() {
-		// TODO Auto-generated method stub
+		initServer();
+		
+	}
+
+	private void initServer() {
+		try {
+			serverSocket = new ServerSocket(port);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+		
+		
+        try {
+			Socket socket = serverSocket.accept();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void listenToPort() {
 		
 	}
 
