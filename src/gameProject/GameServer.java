@@ -10,4 +10,9 @@ public class GameServer {
 
 	}
 
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
