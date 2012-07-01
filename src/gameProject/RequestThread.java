@@ -25,6 +25,11 @@ import java.net.Socket;
 
 //ok got to think about it not 100% sure about it 
 
+// each model will be stored in a hash, game ID to model. when a thread updates the model it will do so and then the 
+//model will update each of the other players. the model will know who each player it.
+// the only think that needs to have locks is the model that should be the 
+//only shared state. this should work.
+
 public class RequestThread extends Thread{
     ErrorLogger log;
 	
