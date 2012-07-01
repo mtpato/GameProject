@@ -30,6 +30,10 @@ import java.net.Socket;
 // the only think that needs to have locks is the model that should be the 
 //only shared state. this should work.
 
+/**
+ * @author Michael T Pato
+ *
+ */
 public class RequestThread extends Thread{
     private ErrorLogger log;
 	
@@ -120,9 +124,6 @@ public class RequestThread extends Thread{
 		
 		System.out.println("IN SERVER: " + msg);
 		
-		//for(int i = 0; i < 1000000; i ++) {
-		//	System.out.println(ID);
-		//}
 		
 		
 		
