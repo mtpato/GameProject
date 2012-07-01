@@ -10,8 +10,7 @@ public class TempClient {
 		
 		con.initCon();
 		con.sendMsg("YAY IT WORKS");
-		System.out.println(con.getReply());
-		con.sendMsg("GLAD YOU HEAR ME");
+		//con.sendMsg("GLAD YOU HEAR ME");
 
 	}
 

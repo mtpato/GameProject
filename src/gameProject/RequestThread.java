@@ -31,15 +31,18 @@ import java.net.Socket;
 //only shared state. this should work.
 
 public class RequestThread extends Thread{
-    ErrorLogger log;
+    private ErrorLogger log;
 	
-	BufferedReader input;
-    BufferedWriter output;
-    Socket socket;
+    private BufferedReader in;
+    private BufferedWriter out;
+    private Socket socket;
+    private boolean connected = true;
+    private int ID; 
     
     
-    public RequestThread(Socket socket) {
+    public RequestThread(Socket socket, int ID) {
     	this.socket = socket;
+    	this.ID = ID;
     	
     }
     
@@ -47,23 +50,19 @@ public class RequestThread extends Thread{
     	
     	initIO();
     	
-
-		
-		
-
-   
+    	listen();
     }
 
 	private void initIO() {
 		log = new ErrorLogger("errorLog.txt", this.getClass().toString());//init the error logger	
 		try {
-			input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		} catch (IOException e) {
 			log.log("problem creating the input buffer trace: " + e.toString());
 			e.printStackTrace();
 		}
     	try {
-			output = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+			out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 		} catch (IOException e) {
 			log.log("problem creating the output buffer trace: " + e.toString());
 			
@@ -75,8 +74,75 @@ public class RequestThread extends Thread{
           
     
     private void listen() {
-      
-    }  
+    	String msg;
+    	while(connected) {
+    		try {
+    			if(in.ready()) {
+    				msg = in.readLine();
+    				
+    				handleRequest(msg);
+    			}
+				
+			} catch (IOException e) {
+				log.log("problem reading line from socket. trace: " + e.toString());
+				
+				e.printStackTrace();
+			}
+	
+    	}
+    	
+    	
+    }
+    
+    public void sendMsg(String msg) {
+        if (msg != null && !msg.equals("")) {
+            try{
+                out.write(msg);
+                out.write(("\n"));
+                out.flush();
+            }
+            catch(Exception e)
+            {
+            	
+            	log.log("problem talking to socket. trace: " + e.toString());
+				
+                e.printStackTrace();
+            }
+        } else {
+        	log.log("msg was null when sending.");
+			
+        }
+    }
+
+	private void handleRequest(String msg) {
+		String[] parsedMsg = parseMsg(msg);
+		
+		
+		System.out.println("IN SERVER: " + msg);
+		
+		for(int i = 0; i < 1000000; i ++) {
+			System.out.println(ID);
+		}
+		
+		
+		
+		
+	}
+
+	private String[] parseMsg(String msg) {
+		String[] parsedMsg;
+		
+		if (msg.contains(":")) {
+			parsedMsg = msg.split(":");
+		} else {
+			parsedMsg = new String[1];
+			parsedMsg[0] = msg;
+		}
+		
+
+		
+		return parsedMsg;
+	}  
 	
 	
 	

@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 
 public class GameServer {
 	
@@ -14,6 +15,7 @@ public class GameServer {
 	private ServerSocket serverSocket;
 	private ErrorLogger log;
 	private boolean running;
+	HashMap<Integer,Game> games;//all current running games
 	
 	
 	/**
@@ -44,7 +46,7 @@ public class GameServer {
 			e.printStackTrace();
 		}
         
-		
+		int ids = 0;//testing
 		while(running) {
 			
 			System.out.println("waiting for con");
@@ -52,8 +54,12 @@ public class GameServer {
 				Socket socket = serverSocket.accept();
 				
 				System.out.println("got con");
-				talk(socket);
 				
+
+				RequestThread r = new RequestThread(socket, ids);
+				r.start();
+				ids++;//testing
+				System.out.println("checking: " + ids);
 				
 			} catch (IOException e) {
 				log.log("problem accepting connection trace: " + e.toString());
