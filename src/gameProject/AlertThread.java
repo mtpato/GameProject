@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.Observable;
+import java.util.Observer;
 
 
 //ok now i need a listening and talking pair so we can have tings run 
@@ -19,7 +21,7 @@ import java.net.Socket;
 //who is connected and alert all the talker threads to push the new board. listener 
 //threads will actually handle requests from the client 
 
-public class AlertThread extends Thread{
+public class AlertThread extends Thread implements Observer{
     ErrorLogger log;
 	
 	BufferedReader input;
@@ -62,10 +64,12 @@ public class AlertThread extends Thread{
     
     
           
-    
-    private void listen() {
-      
-    }  
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		
+	}  
 	
 	
 	
