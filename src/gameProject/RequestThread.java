@@ -19,6 +19,12 @@ import java.net.Socket;
 //who is connected and alert all the talker threads to push the new board. listener 
 //threads will actually handle requests from the client 
 
+//ok change this don't have to sets of threads maybe just 
+//have an observer object that can be alerted, when alerted it will 
+//set the message it needs to 
+
+//ok got to think about it not 100% sure about it 
+
 public class RequestThread extends Thread{
     ErrorLogger log;
 	
