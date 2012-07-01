@@ -120,9 +120,9 @@ public class RequestThread extends Thread{
 		
 		System.out.println("IN SERVER: " + msg);
 		
-		for(int i = 0; i < 1000000; i ++) {
-			System.out.println(ID);
-		}
+		//for(int i = 0; i < 1000000; i ++) {
+		//	System.out.println(ID);
+		//}
 		
 		
 		
