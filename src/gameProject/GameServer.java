@@ -3,7 +3,10 @@ package gameProject;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Michael T Pato
@@ -19,7 +22,7 @@ public class GameServer {
 	private ErrorLogger log;
 	private boolean running;
 	private HashMap<Integer,Game> games;//all current running games
-	
+	private Set<Integer> activeUsers;
 	
 	/**
 	 * @param args
@@ -34,6 +37,8 @@ public class GameServer {
 	 */
 	public void run() {
 		log = new ErrorLogger("errorLog.txt", this.getClass().toString());//init the error logger
+		activeUsers = Collections.synchronizedSet(new HashSet());
+		
 		
 		running = true;
 		System.out.println("RUNNING");
@@ -68,7 +73,7 @@ public class GameServer {
 				System.out.println("got con");
 				
 
-				RequestThread r = new RequestThread(socket, ids);
+				RequestThread r = new RequestThread(socket, activeUsers);
 				r.start();
 				ids++;//testing
 				
