@@ -10,28 +10,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-//ok now i need a listening and talking pair so we can have tings run 
-//async all the time no matter how much comunication 
-//both sides will have this 
-//let the listener always listen and the talker always talk 
-
-//for live updating when a move is made i must keep track of all the 
-//diff cons as separate  thread pairs that know about each other 
-//im thinking a hashMap of GameID to game object the game object can keep track of
-//who is connected and alert all the talker threads to push the new board. listener 
-//threads will actually handle requests from the client 
-
-//ok change this don't have to sets of threads maybe just 
-//have an observer object that can be alerted, when alerted it will 
-//set the message it needs to 
-
-//ok got to think about it not 100% sure about it 
-
-// each model will be stored in a hash, game ID to model. when a thread updates the model it will do so and then the 
-//model will update each of the other players. the model will know who each player it.
-// the only think that needs to have locks is the model that should be the 
-//only shared state. this should work.
-
 /**
  * @author Michael T Pato
  *
