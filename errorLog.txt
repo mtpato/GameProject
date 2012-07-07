@@ -2,3 +2,5 @@ Time: 2012/06/30 18:54:14 | Class: class gameProject.GameServer | line: 10 | APP
 Time: 2012/06/30 18:55:43 | Class: class gameProject.GameServer | line: 10 | APPLE
 Time: 2012/06/30 19:13:21 | Class: class gameProject.GameServer | problem creating server socket trace: java.net.BindException: Address already in use
 Time: 2012/07/01 10:58:27 | Class: class gameProject.GameServer | problem creating server socket trace: java.net.BindException: Address already in use
+Time: 2012/07/07 14:20:29 | Class: class gameProject.RequestThread | Cannot connect to database server trace: java.sql.SQLException: Access denied for user 'thegame'@'localhost' (using password: YES)
+Time: 2012/07/07 14:26:24 | Class: class gameProject.RequestThread | Cannot connect to database server trace: java.sql.SQLException: Access denied for user 'thegame'@'localhost' (using password: YES)
