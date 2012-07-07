@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -23,6 +24,7 @@ public class GameServer {
 	private boolean running;
 	private HashMap<Integer,Game> games;//all current running games
 	private Set<Integer> activeUsers;
+	//private Queue<Integer> lookingForGame;use for finding random players
 	
 	/**
 	 * @param args
@@ -37,7 +39,7 @@ public class GameServer {
 	 */
 	public void run() {
 		log = new ErrorLogger("errorLog.txt", this.getClass().toString());//init the error logger
-		activeUsers = Collections.synchronizedSet(new HashSet());
+		activeUsers = Collections.synchronizedSet(new HashSet<Integer>());
 		
 		
 		running = true;

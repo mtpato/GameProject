@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -25,7 +26,8 @@ public class RequestThread extends Thread {
 	private BufferedWriter out;
 	private Socket socket;
 	private boolean connected = true;
-	private int userID;
+	private int userID = -1;
+	private boolean quit = false;
 
 	private boolean signedIn = false;
 	
@@ -38,6 +40,8 @@ public class RequestThread extends Thread {
 		sharedUsers = activeUsers;
 
 	}
+	
+	private Random rand = new Random();
 
 	public void run() {
 
@@ -45,8 +49,25 @@ public class RequestThread extends Thread {
 		initDBCon("theGame", "212273625", "jdbc:mysql://localhost/tile");
 
 		listen();
-
+		
+		//once game is quit
+		closeSocketCon();
 		closeDBCon();
+	}
+
+	private void closeSocketCon() {
+        try {
+        	
+        	if(socket.isConnected()) {
+        		 socket.close();
+        	}
+        
+            
+        } catch (IOException e) {
+			log.log("problem closing socket. trace: " + e.toString());
+            e.printStackTrace();
+        }
+		
 	}
 
 	/**
@@ -114,7 +135,7 @@ public class RequestThread extends Thread {
      */
 	private void listen() {
 		String msg;
-		while (connected) {
+		while (socket.isConnected() && !quit) {
 			try {
 				if (in.ready()) {
 					msg = in.readLine();
@@ -163,16 +184,152 @@ public class RequestThread extends Thread {
 	private void handleRequest(String msg) {
 		String[] parsedMsg = parseMsg(msg);
 
+		boolean validMsg = false;
+		
 		System.out.println("IN SERVER: " + msg);
 
 		
 		//check signedIn boolean before doing anything but create user and login
-		if (parsedMsg[0].equals("login")) {
-			checkLogin(parsedMsg[1]);
-		} else if (parsedMsg[0].equals("newUser")) {
-			createNewUser(parsedMsg[1]);
+		if (parsedMsg[0].equals("quit")) {
+			quitGame();
+			validMsg = true;
+		} else if(!signedIn) {
+			if (parsedMsg[0].equals("login")) {
+				checkLogin(parsedMsg[1]);
+				validMsg = true;
+			} else if (parsedMsg[0].equals("newUser")) {
+				createNewUser(parsedMsg[1]);
+				validMsg = true;
+			}
+		} else if(signedIn) {
+			if (parsedMsg[0].equals("getGames")) {
+				getGames(parsedMsg[1]);
+				validMsg = true;
+			} else if (parsedMsg[0].equals("newGame")) {
+				makeNewGame(parsedMsg[1]);
+				validMsg = true;
+			} else if (parsedMsg[0].equals("gameState")) {
+				getGameState(parsedMsg[1]);
+				validMsg = true;
+			} else if (parsedMsg[0].equals("makeMove")) {
+				makeMove(parsedMsg[1]);
+				validMsg = true;
+			} else if (parsedMsg[0].equals("signOut")) {
+				signOut();
+				validMsg = true;
+			}
+						
 		}
+		
+		
+		if(!validMsg) {
+			log.log("SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg \"" + msg + "\" ");
+		}
+		
+		
 
+	}
+
+	/**
+	 * the creates a new game with a known or random user
+	 * 
+	 * @param s
+	 */
+	private void makeNewGame(String s) {
+		//String[] args = s.split(",");
+		
+		String opUser = s;
+		int opUserID = -1;
+		
+		
+		if (opUser.equals("randomOp")) {
+			//do random later for not worry about known player
+			//int index = rand.nextInt(sharedUsers.size());
+			System.out.println("gettign random player");
+			
+			//opUserID = 
+		} else {
+			ResultSet r = selectDB("select userID from users where userName = ?", opUser );
+			
+			
+			try {
+				if (r.next()) {
+					opUserID = r.getInt("userID");
+				} else {
+					sendMsg("error:noUser");
+				}
+
+			} catch (SQLException e) {
+				log.log("problem with ResultsSet checking for opUserID in authenticate trace: "
+						+ e.toString());
+				e.printStackTrace();
+			}
+			
+			
+			if(opUserID > -1) {
+				if(createGame(opUserID, this.userID)) {
+					sendMsg("done:gameCreated");
+				} else {
+					sendMsg("error:problemCreatingGame");
+				}
+				
+				
+			}
+			
+		}
+		
+	
+		
+	}
+
+	
+
+	private boolean createGame(int opUserID, int userID) {
+			
+		//ok here i need to create the game along will the info for both players 
+		//updating all the database tables and what not. 
+		
+		
+		return false;
+		
+	}
+
+	private void quitGame() {
+		quit = true;
+		
+	}
+
+	/**
+	 * 
+	 */
+	private void signOut() {
+		signedIn = false;
+		sharedUsers.remove(userID);
+		this.userID = -1;
+	}
+
+	/**
+	 * @param string
+	 */
+	private void makeMove(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * @param string
+	 */
+	private void getGameState(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * @param string
+	 */
+	private void getGames(String string) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**
@@ -180,6 +337,9 @@ public class RequestThread extends Thread {
 	 */
 	private void createNewUser(String s) {
 		boolean working = true;
+		
+		
+		
 		// on client check that the email is an email
 		// that username follows the UN rules. only letters and numbers
 		// and check that the pass is strong enough
