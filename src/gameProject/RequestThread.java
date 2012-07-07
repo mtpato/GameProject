@@ -27,6 +27,8 @@ public class RequestThread extends Thread {
 	private boolean connected = true;
 	private int userID;
 
+	private boolean signedIn = false;
+	
 	private Set<Integer> sharedUsers;
 
 	private Connection dbCon = null;
@@ -163,6 +165,8 @@ public class RequestThread extends Thread {
 
 		System.out.println("IN SERVER: " + msg);
 
+		
+		//check signedIn boolean before doing anything but create user and login
 		if (parsedMsg[0].equals("login")) {
 			checkLogin(parsedMsg[1]);
 		} else if (parsedMsg[0].equals("newUser")) {
@@ -176,24 +180,23 @@ public class RequestThread extends Thread {
 	 */
 	private void createNewUser(String s) {
 		boolean working = true;
-		//on client check that the email is an email
-		//that username follows the UN rules. only letters and numbers
-		//and check that the pass is strong enough
+		// on client check that the email is an email
+		// that username follows the UN rules. only letters and numbers
+		// and check that the pass is strong enough
 		// AS in has 3 of letters, caps, numbers, symbols
-		// and is atleast 7 long 
-		
-		
+		// and is atleast 7 long
+
 		// the array is [username,password,email]
 		String[] args = s.split(",");
-		
-		
-		//check if username exists
-		
-		ResultSet r = selectDB("select userID from users where userName = ?", args[0]);
+
+		// check if username exists
+
+		ResultSet r = selectDB("select userID from users where userName = ?",
+				args[0]);
 
 		try {
 			if (r.next()) {
-				sendMsg("error"); //return error user exists
+				sendMsg("error"); // return error user exists
 				working = false;
 			}
 
@@ -203,24 +206,55 @@ public class RequestThread extends Thread {
 			e.printStackTrace();
 		}
 		
-		if(working) {
-			//working = updateBD("insert into users VALUES")
-		}
-	
 		
-		//now create new user
-		
-		
-		
+		//update the users table
 
+		if (working) {
+			working = updateDB("insert into users (username, email) VALUES (?, ?)",
+					args[0], args[2]);
+		}
+		
+		
+		//update the login table
+
+		if (working) {
+
+			r = selectDB("select userID from users where userName = ?", args[0]);
+
+			int id;
+
+			try {
+				if (r.next()) {
+					id = r.getInt("userID");
+					working = updateDB("insert into login (userID, password) VALUES (?, PASSWORD(?))",
+							String.valueOf(id), args[1]);
+
+				}
+
+			} catch (SQLException e) {
+				log.log("problem with ResultsSet checking for userID in createNewUser trace: "
+						+ e.toString());
+				e.printStackTrace();
+			}
+			
+			
+			//alert the client as to the result
+
+			if (working) {
+				sendMsg("done");
+			} else {
+				sendMsg("error");
+			}
+
+		}
 
 	}
 
 	/**
-	 * this method checks the login info if the info is worng is 
-	 * tells the client there was a problem with the login info.
-	 * if it is write it adds the userID to the current users and 
-	 * send confirmation that the con has been made to the client.
+	 * this method checks the login info if the info is worng is tells the
+	 * client there was a problem with the login info. if it is write it adds
+	 * the userID to the current users and send confirmation that the con has
+	 * been made to the client.
 	 * 
 	 * @param string
 	 */
@@ -239,6 +273,7 @@ public class RequestThread extends Thread {
 		if (correct) {
 			sharedUsers.add(userID);
 			this.userID = userID;
+			signedIn = true;
 			sendMsg("done");// use done for all andshake
 
 		} else {
@@ -254,13 +289,15 @@ public class RequestThread extends Thread {
 	 * 
 	 * 
 	 * @param parsedLog
-	 * @return userID if correct and exists, -1 is incorrect or doesnt exist 
+	 * @return userID if correct and exists, -1 is incorrect or doesnt exist
 	 */
 	private int authenticate(String[] parsedLog) {
 
 		int userID = -1;
 
-		ResultSet r = selectDB("select users.userID from users join login on users.userID=login.userID where userName = ?  AND password = PASSWORD(?);", parsedLog[0], parsedLog[1]);
+		ResultSet r = selectDB(
+				"select users.userID from users join login on users.userID=login.userID where userName = ?  AND password = PASSWORD(?);",
+				parsedLog[0], parsedLog[1]);
 
 		try {
 			if (r.next()) {
@@ -272,15 +309,12 @@ public class RequestThread extends Thread {
 					+ e.toString());
 			e.printStackTrace();
 		}
-		
-		
+
 		return userID;
 
-
 	}
-	
+
 	private boolean updateDB(String stmt, String... args) {
-		
 
 		try {
 			// make query
@@ -294,13 +328,12 @@ public class RequestThread extends Thread {
 
 			// get results
 			int worked = p.executeUpdate();
-			
-			if(worked > 0) {
+
+			if (worked > 0) {
 				return true;
 			} else {
 				return false;
 			}
-			
 
 		} catch (Exception e) {
 			log.log("could not get result set form DB trace: " + e.toString());
@@ -310,7 +343,6 @@ public class RequestThread extends Thread {
 		return false;
 
 	}
-	
 
 	private ResultSet selectDB(String stmt, String... args) {
 		ResultSet r = null;

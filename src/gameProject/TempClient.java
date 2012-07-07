@@ -15,15 +15,18 @@ public class TempClient {
 	public static void main(String[] args) {
 		new TempClient().run();
 		//con.sendMsg("GLAD YOU HEAR ME");
+		
 
 	}
 
 	private void run() {
 
-		login();
 		
-		TalkerThread t = new TalkerThread(con);
-		t.start();
+		sendCommandsLoop();
+		//login();
+		
+		//TalkerThread t = new TalkerThread(con);
+		//t.start();
 		/*
 		while(connected) {
 			
@@ -32,6 +35,29 @@ public class TempClient {
 			
 			
 		}*/
+	}
+	
+	private void sendCommandsLoop() {
+
+		String in; // MUST ENCRYPT
+		
+		con = new SocketConnector(4356, "localhost");
+		
+		con.initCon();
+		
+		
+		System.out.println("what command: ");
+		in = scanner.nextLine();
+		
+		if(!in.equals("q")) {
+
+			con.sendMsg(in);
+			
+			System.out.println("reply: " + con.getReply());
+			
+			sendCommandsLoop();
+		}
+
 	}
 
 	private void login() {
