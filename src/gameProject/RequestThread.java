@@ -174,9 +174,45 @@ public class RequestThread extends Thread {
 	/**
 	 * @param string
 	 */
-	private void createNewUser(String string) {
+	private void createNewUser(String s) {
+		boolean working = true;
+		//on client check that the email is an email
+		//that username follows the UN rules. only letters and numbers
+		//and check that the pass is strong enough
+		// AS in has 3 of letters, caps, numbers, symbols
+		// and is atleast 7 long 
+		
+		
+		// the array is [username,password,email]
+		String[] args = s.split(",");
+		
+		
+		//check if username exists
+		
+		ResultSet r = selectDB("select userID from users where userName = ?", args[0]);
 
-		// TODO Auto-generated method stub
+		try {
+			if (r.next()) {
+				sendMsg("error"); //return error user exists
+				working = false;
+			}
+
+		} catch (SQLException e) {
+			log.log("problem with ResultsSet checking for userID in createNewUser trace: "
+					+ e.toString());
+			e.printStackTrace();
+		}
+		
+		if(working) {
+			//working = updateBD("insert into users VALUES")
+		}
+	
+		
+		//now create new user
+		
+		
+		
+
 
 	}
 
@@ -224,8 +260,7 @@ public class RequestThread extends Thread {
 
 		int userID = -1;
 
-		ResultSet r = callDB("select userID from users where userName = \'"
-				+ parsedLog[0] + "\'");
+		ResultSet r = selectDB("select users.userID from users join login on users.userID=login.userID where userName = ?  AND password = PASSWORD(?);", parsedLog[0], parsedLog[1]);
 
 		try {
 			if (r.next()) {
@@ -237,31 +272,47 @@ public class RequestThread extends Thread {
 					+ e.toString());
 			e.printStackTrace();
 		}
-
-		if (userID > -1) {
-			r = callDB("select userID from login where userID = \'" + userID
-					+ "\' AND password = PASSWORD(\'" + parsedLog[1] + "\')");
-
-			try {
-				if (r.next()) {
-					return userID;
-				} else {
-					return -1;
-				}
-
-			} catch (SQLException e) {
-				log.log("problem with ResultsSet checking for userID trace: "
-						+ e.toString());
-				e.printStackTrace();
-			}
-		}
+		
 		
 		return userID;
 
 
 	}
+	
+	private boolean updateDB(String stmt, String... args) {
+		
 
-	private ResultSet callDB(String stmt, String... args) {
+		try {
+			// make query
+			PreparedStatement p = dbCon.prepareStatement(stmt);
+
+			// set variables
+
+			for (int i = 0; i < args.length; i++) {
+				p.setString(i + 1, args[i]);
+			}
+
+			// get results
+			int worked = p.executeUpdate();
+			
+			if(worked > 0) {
+				return true;
+			} else {
+				return false;
+			}
+			
+
+		} catch (Exception e) {
+			log.log("could not get result set form DB trace: " + e.toString());
+			e.printStackTrace();
+		}
+
+		return false;
+
+	}
+	
+
+	private ResultSet selectDB(String stmt, String... args) {
 		ResultSet r = null;
 
 		try {
@@ -279,7 +330,6 @@ public class RequestThread extends Thread {
 			return r;
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			log.log("could not get result set form DB trace: " + e.toString());
 			e.printStackTrace();
 		}
