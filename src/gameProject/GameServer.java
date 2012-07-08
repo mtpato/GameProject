@@ -24,7 +24,7 @@ public class GameServer {
 	private boolean running;
 	private HashMap<Integer,Game> games;//all current running games
 	private Set<Integer> activeUsers;
-	//private Queue<Integer> lookingForGame;use for finding random players
+	//private Queue<Integer> lookingForGame;//use for finding random players might want blockingQueue
 	
 	/**
 	 * @param args
