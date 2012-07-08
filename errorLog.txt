@@ -5,3 +5,4 @@ Time: 2012/07/01 10:58:27 | Class: class gameProject.GameServer | problem creati
 Time: 2012/07/07 14:20:29 | Class: class gameProject.RequestThread | Cannot connect to database server trace: java.sql.SQLException: Access denied for user 'thegame'@'localhost' (using password: YES)
 Time: 2012/07/07 14:26:24 | Class: class gameProject.RequestThread | Cannot connect to database server trace: java.sql.SQLException: Access denied for user 'thegame'@'localhost' (using password: YES)
 Time: 2012/07/07 17:41:44 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "jahsd" 
+Time: 2012/07/08 17:49:37 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "jahsd" 

@@ -1,5 +1,7 @@
 package gameProject;
 
-public class TileGameState extends GameState {
-
+public class TileGameState implements GameState {
+	
+	
+	
 }

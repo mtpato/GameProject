@@ -21,6 +21,11 @@ public class TempClient {
 
 	private void run() {
 
+		con = new SocketConnector(4356, "localhost");
+		
+		con.initCon();
+		
+		con.sendMsg("tileGame");
 		
 		sendCommandsLoop();
 		//login();
@@ -41,9 +46,6 @@ public class TempClient {
 
 		String in; // MUST ENCRYPT
 		
-		con = new SocketConnector(4356, "localhost");
-		
-		con.initCon();
 		
 		
 		System.out.println("what command: ");

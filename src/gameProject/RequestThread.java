@@ -55,6 +55,7 @@ public class RequestThread extends Thread {
 		
 		
 		initIO();
+		findGame();
 		initDBCon("theGame", "212273625", "jdbc:mysql://localhost/tile");
 
 		listen();
@@ -62,6 +63,36 @@ public class RequestThread extends Thread {
 		//once game is quit
 		closeSocketCon();
 		closeDBCon();
+	}
+
+	private void findGame() {
+		
+		String msg;
+		
+		try {
+			if (in.ready()) {
+				msg = in.readLine();
+
+				
+				if(msg.equals("tileGame")) {
+					model = new TileModel();
+				} else if(msg.equals("whatever")) {
+					//some other games model 
+					//this shoudl work great
+				}
+				
+				
+				
+				
+			}
+
+		} catch (IOException e) {
+			log.log("problem reading line from socket. trace: "
+					+ e.toString());
+
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void closeSocketCon() {

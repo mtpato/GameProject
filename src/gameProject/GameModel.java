@@ -72,5 +72,7 @@ public abstract class GameModel {
 	 */
 	protected abstract GameState createNewGame(Set<Integer> users, String type);
 	
+	
+	
 
 }

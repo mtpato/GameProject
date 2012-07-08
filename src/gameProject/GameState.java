@@ -1,6 +1,6 @@
 package gameProject;
 
-public abstract class GameState {
+public interface GameState {
 	
 	
 	
