@@ -21,5 +21,7 @@ public abstract class GameModel {
 	 */
 	protected abstract boolean isOver(String state);
 	
+	protected abstract String makeMove(String state, String move);
+	
 
 }
