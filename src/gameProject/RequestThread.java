@@ -20,20 +20,27 @@ import java.util.Set;
  * 
  */
 public class RequestThread extends Thread {
+	//errorlogger
 	private ErrorLogger log;
 
+	//Communication
 	private BufferedReader in;
 	private BufferedWriter out;
 	private Socket socket;
-	private boolean connected = true;
+	
+	//shared state
+	private Set<Integer> sharedUsers;
+	
+	//db stuff
+	private Connection dbCon = null;
+	
+	//threads local variables 
 	private int userID = -1;
 	private boolean quit = false;
-
 	private boolean signedIn = false;
+	private GameModel model;
 	
-	private Set<Integer> sharedUsers;
-
-	private Connection dbCon = null;
+	
 
 	public RequestThread(Socket socket, Set<Integer> activeUsers) {
 		this.socket = socket;
@@ -45,6 +52,8 @@ public class RequestThread extends Thread {
 
 	public void run() {
 
+		
+		
 		initIO();
 		initDBCon("theGame", "212273625", "jdbc:mysql://localhost/tile");
 
@@ -214,6 +223,9 @@ public class RequestThread extends Thread {
 			} else if (parsedMsg[0].equals("makeMove")) {
 				makeMove(parsedMsg[1]);
 				validMsg = true;
+			} else if (parsedMsg[0].equals("deleteGame")) {
+				deleteGame(parsedMsg[1]);
+				validMsg = true;
 			} else if (parsedMsg[0].equals("signOut")) {
 				signOut();
 				validMsg = true;
@@ -228,6 +240,11 @@ public class RequestThread extends Thread {
 		
 		
 
+	}
+
+	private void deleteGame(String string) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**
@@ -285,7 +302,19 @@ public class RequestThread extends Thread {
 	
 
 	private boolean createGame(int opUserID, int userID) {
-			
+		
+		//create game 
+		
+		
+		//put game in DB
+		
+		
+		
+		//update the players table for both players
+		
+		
+		
+		
 		//ok here i need to create the game along will the info for both players 
 		//updating all the database tables and what not. 
 		

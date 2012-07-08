@@ -1,17 +1,28 @@
 package gameProject;
 
-import java.util.Observable;
-
-
 
 /**
  * @author michaelpato
  *
- *this is the model it is observable and will alert its observers when if is changed
- *these observers will be the alertThreads for now 
  *
  *
  */
-public class TileModel extends Observable{
+public class TileModel extends GameModel{
 
+
+
+	@Override
+	protected String makeMove(String state, String move) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected boolean isOver(String state) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
+	
 }
