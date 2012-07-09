@@ -34,20 +34,17 @@ public class TileModel extends GameModel{
 	}
 
 	/* (non-Javadoc)
-	 * the string looks like this 
-	 * players=p1|p2|p3...,h=height,w=width,board=node|node|node|node...
+	 * the string looks like this:
+	 * players=userName-score|userName-score|userName-userID...,h=height,w=width,board=node|node|node|node...
 	 * 
-	 * a node looks like this
+	 * a node looks like this:
 	 * nodeID-x-y-owner-active-adjList
 	 * 
-	 * an adjList looks like this
+	 * an adjList looks like this:
 	 * nodeID.nodeID.nodeID.nodeID...
 	 * 
 	 * example: 
-	 * 
-	 * players=1|2,h=9,w=7,board=10-1-1-1-0-20.21.32.40|11-1-2-2-1-21.22.33.49
-	 * 
-	 * 
+	 * players=1-100|2-20,h=9,w=7,board=10-1-1-1-0-20.21.32.40|11-1-2-2-1-21.22.33.49....
 	 * 
 	 */
 	@Override
@@ -59,7 +56,7 @@ public class TileModel extends GameModel{
 		
 		buf.append("players=");
 		for(int p: s.players) {
-			buf.append(p + "|");
+			buf.append(p + "-" + s.scores.get(p) +"|");
 			
 		}
 		buf.deleteCharAt(buf.length() - 1);
@@ -103,6 +100,9 @@ public class TileModel extends GameModel{
 		
 		TileGameState state = new TileGameState(users, 9, 5);
 	
+		for(int p: state.players) {
+			state.scores.put(p, 0);//start with scores set to 0
+		}
 		
 		createTiles(state);
 		

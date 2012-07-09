@@ -448,17 +448,39 @@ public class RequestThread extends Thread {
 	/**
 	 * @param string
 	 */
-	private void makeMove(String string) {
-		// TODO Auto-generated method stub
+	private void makeMove(String nodeID) {
+		
+
+		
 		
 	}
 
 	/**
-	 * @param string
+	 * this function gets the game state from the database and 
+	 * then sends it to the client
+	 * 
+	 *
+	 * 
+	 * 
+	 * @param string the gameID
 	 */
-	private void getGameState(String string) {
-		
+	private void getGameState(String gameID) {
+		ResultSet r = selectDB("SELECT state FROM games WHERE gameID = ?", gameID );
 
+		
+		try {
+			if(r.next()) {
+				sendMsg("state:" + r.getString("state"));
+				
+			} else {
+				sendMsg("error:notFound");
+			}
+
+		} catch (SQLException e) {
+			log.log("problem with ResultsSet gettinggames info in getGames trace: "
+					+ e.toString());
+			e.printStackTrace();
+		}
 		
 		
 	}
@@ -471,7 +493,7 @@ public class RequestThread extends Thread {
 	private void getGames(String string) {
 		HashMap<Integer,String> games = new  HashMap<Integer,String>();
 		
-		ResultSet r = selectDB("SELECT gameID,users.userName " +
+		ResultSet r = selectDB("SELECT gameID,users.userName,users.userID " +
 				"FROM users JOIN usersTogames " +
 				"ON users.userID = usersTogames.userID " +
 				"WHERE gameID IN ( " +
@@ -488,16 +510,16 @@ public class RequestThread extends Thread {
 			while (r.next()) {
 				gameID = r.getInt("gameID");
 				if(games.containsKey(gameID)) {
-					games.put(gameID, games.get(gameID) + "|" + r.getString("userName"));
+					games.put(gameID, games.get(gameID) + "|" + r.getString("userName") + "-" + r.getInt("userID"));
 				} else {
-					games.put(gameID, r.getString("userName"));
+					games.put(gameID, r.getString("userName") + "-" + r.getInt("userID"));
 				}
 				
 				
 			}
 
 		} catch (SQLException e) {
-			log.log("problem with ResultsSet checking for userID in createNewUser trace: "
+			log.log("problem with ResultsSet gettinggames info in getGames trace: "
 					+ e.toString());
 			e.printStackTrace();
 		}
@@ -520,10 +542,10 @@ public class RequestThread extends Thread {
 	 * but that might be more data than its worth.
 	 * 
 	 * format:
-	 * games:gameID|userName|userName...,gameID|userName|userName...
+	 * games:gameID|userName-userID|userName-userID...,gameID|userName-userID|userName-userID...
 	 * 
 	 * Example:
-	 * games:15|mike|test3,17|mike|test3|test10
+	 * games:15|mike-1|test3-2,17|mike|test3|test10
 	 * 
 	 * @param games
 	 * @return
