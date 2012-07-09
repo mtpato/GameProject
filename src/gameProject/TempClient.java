@@ -27,6 +27,24 @@ public class TempClient {
 		
 		
 		
+		String ans = con.getReply();
+	
+		while(!ans.equals("done")) {
+			ans = con.getReply();
+		}
+		
+		
+		con.sendMsg("tileGame");
+		
+		ans = con.getReply();
+		
+		while(!ans.equals("done")) {
+			ans = con.getReply();
+		}
+		
+		
+		System.out.println("ON TO COMANDS");
+		
 		doPreSetMsgs();
 		
 		sendCommandsLoop();
@@ -45,7 +63,6 @@ public class TempClient {
 	}
 	
 	private void doPreSetMsgs() {
-		con.sendMsg("tileGame");
 		con.sendMsg("login:mike,testPass");
 		con.sendMsg("newGame:test3");
 		

@@ -55,9 +55,16 @@ public class RequestThread extends Thread {
 		
 		
 		initIO();
-		findGame();
 		initDBCon("theGame", "212273625", "jdbc:mysql://localhost/tile");
+		
+		sendMsg("done");//IO set up need to find game 	
 
+		findGame();
+		
+		//sendMsg("done");
+		//while(model == null)
+		sendMsg("done");//let the client know that the connection was successful 
+		
 		listen();
 		
 		//once game is quit
@@ -66,33 +73,34 @@ public class RequestThread extends Thread {
 	}
 
 	private void findGame() {
-		
-		String msg;
-		
-		try {
-			if (in.ready()) {
-				msg = in.readLine();
 
-				
-				if(msg.equals("tileGame")) {
-					model = new TileModel();
-				} else if(msg.equals("whatever")) {
-					//some other games model 
-					//this shoudl work great
+		String msg = null;
+		while (msg == null) {
+
+			try {
+				if (in.ready()) {
+					msg = in.readLine();
+
+					if (msg.equals("tileGame")) {
+						model = new TileModel();
+						System.out.println("made Tile Game Model");
+
+					} else if (msg.equals("whatever")) {
+						// some other games model
+						// this shoudl work great
+					}
+
 				}
-				
-				
-				
-				
+
+			} catch (IOException e) {
+				log.log("problem reading line from socket. trace: "
+						+ e.toString());
+
+				e.printStackTrace();
 			}
 
-		} catch (IOException e) {
-			log.log("problem reading line from socket. trace: "
-					+ e.toString());
-
-			e.printStackTrace();
 		}
-		
+
 	}
 
 	private void closeSocketCon() {
@@ -366,6 +374,8 @@ public class RequestThread extends Thread {
 		users.add(userID);
 		
 		//create game 
+		
+		System.out.println(model);
 		GameState s = model.createNewGame(users);
 		
 		//model.printState(s);
@@ -442,15 +452,41 @@ public class RequestThread extends Thread {
 	 * @param string
 	 */
 	private void getGameState(String string) {
-		// TODO Auto-generated method stub
+		
+
+		
 		
 	}
 
 	/**
+	 * this method finds all the active games for this user in this game 
+	 * 
 	 * @param string
 	 */
 	private void getGames(String string) {
-		// TODO Auto-generated method stub
+		
+		
+		ResultSet r = selectDB("SELECT gameID,users.userID " +
+				"FROM users JOIN usersTogames " +
+				"ON users.userID = usersTogames.userID " +
+				"WHERE gameID IN ( " +
+				"SELECT gameID " +
+				"FROM usersToGames " +
+				"WHERE usersToGames.userID = ? " +
+				")", String.valueOf(userID));
+
+		try {
+			if (r.next()) {
+				
+				
+				
+			}
+
+		} catch (SQLException e) {
+			log.log("problem with ResultsSet checking for userID in createNewUser trace: "
+					+ e.toString());
+			e.printStackTrace();
+		}
 		
 	}
 

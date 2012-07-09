@@ -60,12 +60,12 @@ public class GameServer {
 		try {
 			serverSocket = new ServerSocket(port);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			log.log("problem creating server socket trace: " + e.toString());
 			e.printStackTrace();
 		}
         
-		int ids = 0;//testing
+	
 		while(running) {
 			
 			System.out.println("waiting for con");
@@ -77,7 +77,7 @@ public class GameServer {
 
 				RequestThread r = new RequestThread(socket, activeUsers);
 				r.start();
-				ids++;//testing
+				
 				
 				
 			} catch (IOException e) {
