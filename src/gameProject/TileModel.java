@@ -1,5 +1,7 @@
 package gameProject;
 
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Set;
 
 
@@ -11,6 +13,8 @@ import java.util.Set;
  */
 public class TileModel extends GameModel{
 
+	Random rand = new Random();
+	
 	@Override
 	protected String makeMove(GameState state, String move) {
 		// TODO Auto-generated method stub
@@ -55,6 +59,8 @@ public class TileModel extends GameModel{
 		//next need to set up adjs for the tiles 
 		
 		//then GET THE RANDOM ASSIGNMENT OF TILES
+		
+		assignTiles(state, users);
 
 
 		
@@ -63,6 +69,7 @@ public class TileModel extends GameModel{
 		
 		return state;
 	}
+
 
 
 	@Override
@@ -76,10 +83,10 @@ public class TileModel extends GameModel{
 		TileGameState s = (TileGameState) state;
 		
 		
-		for(int i = 0; i < 5; i ++) {
+		for(int i = 0; i < 7; i ++) {
 			if(i % 2 == 0) {
 				System.out.print("     ");
-				for(int j = 0; j < 3; j++) {
+				for(int j = 0; j < 5; j++) {
 					
 					System.out.print("  ");
 					System.out.print(s.tiles.get(i + "" + j).nodeID + ":" + s.tiles.get(i + "" + j).owner + ":");
@@ -96,7 +103,7 @@ public class TileModel extends GameModel{
 				
 			} else {
 				
-				for(int j = 0; j < 4; j++) {
+				for(int j = 0; j < 6; j++) {
 					System.out.print("  ");
 					System.out.print(s.tiles.get(i + "" + j).nodeID + ":" + s.tiles.get(i + "" + j).owner + ":");
 					
@@ -120,12 +127,50 @@ public class TileModel extends GameModel{
 		
 	}
 	
+	private void assignTiles(TileGameState state, Set<Integer> users) {
+		ArrayList<Integer> userList = new ArrayList<Integer>(users);
+		
+		int p;
+		int aCount = 0;
+		int bCount = 0;
+		
+		for(TileNode t: state.tiles.values()) {
+			p = rand.nextInt(2);
+			
+			
+			System.out.println(t.nodeID);
+			
+			if(aCount == state.tiles.size() / 2) {
+				t.owner = userList.get(1);
+				bCount++;
+				
+			} else if(aCount == state.tiles.size() / 2) {
+				t.owner = userList.get(0);
+				aCount++;
+				
+			} else if(p == 0) {
+				t.owner = userList.get(0);
+				aCount++;
+				
+			} else {
+				t.owner = userList.get(1);
+				bCount++;
+			}
+			
+			
+			
+		}
+
+		
+		
+	}
+	
 	private void createTiles(TileGameState state) {
 		int n = 1;
 		
-		for(int i = 0; i < 5; i ++) {
+		for(int i = 0; i < 7; i ++) {
 			if(i % 2 == 0) {
-				for(int j = 0; j < 3; j++) {
+				for(int j = 0; j < 5; j++) {
 					state.tiles.put("" + i + "" + j, new TileNode(n + 10, i, j));
 					n++;
 					
@@ -134,7 +179,7 @@ public class TileModel extends GameModel{
 				
 			} else {
 				
-				for(int j = 0; j < 4; j++) {
+				for(int j = 0; j < 6; j++) {
 					state.tiles.put("" + i + "" + j, new TileNode(n + 10, i, j));
 					n++;
 					
