@@ -64,7 +64,9 @@ public class TempClient {
 	
 	private void doPreSetMsgs() {
 		con.sendMsg("login:mike,testPass");
+		System.out.println(con.getReply());
 		con.sendMsg("newGame:test3");
+		System.out.println(con.getReply());
 		
 		
 	}

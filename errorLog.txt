@@ -1423,3 +1423,5 @@ Time: 2012/07/09 13:43:31 | Class: class gameProject.RequestThread | problem tal
 Time: 2012/07/09 13:43:31 | Class: class gameProject.RequestThread | problem talking to socket. trace: java.net.SocketException: Broken pipe
 Time: 2012/07/09 13:43:31 | Class: class gameProject.RequestThread | problem talking to socket. trace: java.net.SocketException: Broken pipe
 Time: 2012/07/09 13:49:42 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "tileGame" 
+Time: 2012/07/09 14:27:58 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "get" 
+Time: 2012/07/09 14:28:48 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "get" 

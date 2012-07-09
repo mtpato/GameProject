@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -57,13 +58,17 @@ public class RequestThread extends Thread {
 		initIO();
 		initDBCon("theGame", "212273625", "jdbc:mysql://localhost/tile");
 		
+		
 		sendMsg("done");//IO set up need to find game 	
 
 		findGame();
+
 		
 		//sendMsg("done");
 		//while(model == null)
 		sendMsg("done");//let the client know that the connection was successful 
+		
+		
 		
 		listen();
 		
@@ -251,7 +256,7 @@ public class RequestThread extends Thread {
 			}
 		} else if(signedIn) {
 			if (parsedMsg[0].equals("getGames")) {
-				getGames(parsedMsg[1]);
+				getGames("");
 				validMsg = true;
 			} else if (parsedMsg[0].equals("newGame")) {
 				makeNewGame(parsedMsg[1]);
@@ -464,20 +469,29 @@ public class RequestThread extends Thread {
 	 * @param string
 	 */
 	private void getGames(String string) {
+		HashMap<Integer,String> games = new  HashMap<Integer,String>();
 		
-		
-		ResultSet r = selectDB("SELECT gameID,users.userID " +
+		ResultSet r = selectDB("SELECT gameID,users.userName " +
 				"FROM users JOIN usersTogames " +
 				"ON users.userID = usersTogames.userID " +
 				"WHERE gameID IN ( " +
-				"SELECT gameID " +
+				"SELECT usersToGames.gameID " +
 				"FROM usersToGames " +
+				"JOIN games on games.gameID = usersTogames.gameID " +
 				"WHERE usersToGames.userID = ? " +
-				")", String.valueOf(userID));
+				"AND games.finished = ? " +
+				"AND games.game = ? " +
+				")", String.valueOf(userID), String.valueOf(0), model.whatGame());
 
 		try {
-			if (r.next()) {
-				
+			int gameID;
+			while (r.next()) {
+				gameID = r.getInt("gameID");
+				if(games.containsKey(gameID)) {
+					games.put(gameID, games.get(gameID) + "|" + r.getString("userName"));
+				} else {
+					games.put(gameID, r.getString("userName"));
+				}
 				
 				
 			}
@@ -488,6 +502,48 @@ public class RequestThread extends Thread {
 			e.printStackTrace();
 		}
 		
+		
+		//System.out.println(games);
+		
+		String gamesString = makeGamesString(games);
+		
+		sendMsg(gamesString);
+		
+	}
+
+	/**
+	 * this function builds the string to send to the client with 
+	 * the info about what games they have active 
+	 * 
+	 * ISSUE: right now it just sends the games and the players in them 
+	 * might want to make it send more later like stats about the game 
+	 * but that might be more data than its worth.
+	 * 
+	 * format:
+	 * games:gameID|userName|userName...,gameID|userName|userName...
+	 * 
+	 * Example:
+	 * games:15|mike|test3,17|mike|test3|test10
+	 * 
+	 * @param games
+	 * @return
+	 */
+	private String makeGamesString(HashMap<Integer, String> games) {
+		
+		StringBuilder buf = new StringBuilder("games:");
+		
+		for(int gID: games.keySet()) {
+			buf.append(gID + "|" + games.get(gID)+ ",");
+		}
+		
+		for(String s: games.values()) {
+			buf.append(s + ",");
+		}
+		
+		buf.deleteCharAt(buf.length() - 1);
+		
+		
+		return buf.toString();
 	}
 
 	/**
