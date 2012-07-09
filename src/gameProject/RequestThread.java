@@ -340,11 +340,17 @@ public class RequestThread extends Thread {
 		users.add(userID);
 		
 		//create game 
-		GameState g = model.createNewGame(users);///////
+		GameState s = model.createNewGame(users);///////
 		
-		model.printState(g);
+		model.printState(s);
 		
 		//put game in DB
+		
+		String compState = model.compressGameState(s);
+		
+		System.out.println(compState);
+		
+		
 		
 		
 		

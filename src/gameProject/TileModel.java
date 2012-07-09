@@ -33,10 +33,62 @@ public class TileModel extends GameModel{
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * the string looks like this 
+	 * players=p1|p2|p3...,h=height,w=width,board=node|node|node|node...
+	 * 
+	 * a node looks like this
+	 * nodeID-x-y-owner-active-adjList
+	 * 
+	 * an adjList looks like this
+	 * nodeID.nodeID.nodeID.nodeID...
+	 * 
+	 * example: 
+	 * 
+	 * players=1|2,h=9,w=7,board=10-1-1-1-0-20.21.32.40|11-1-2-2-1-21.22.33.49
+	 * 
+	 * 
+	 * 
+	 */
 	@Override
 	protected String compressGameState(GameState state) {
-		// TODO Auto-generated method stub
-		return null;
+		TileGameState s = (TileGameState) state;
+		
+		StringBuilder buf = new StringBuilder();
+		
+		
+		buf.append("players=");
+		for(int p: s.players) {
+			buf.append(p + "|");
+			
+		}
+		buf.deleteCharAt(buf.length() - 1);
+		
+		buf.append(",h=" + s.height);
+		buf.append(",w=" + s.width);
+
+		
+		
+		buf.append(",board=");
+		for(TileNode t: s.tiles.values()) {
+			buf.append(t.nodeID + "-" + t.tileX + "-" + t.tileY + "-" +
+					t.owner + "-");
+			
+			if(t.active) buf.append(1);
+			else buf.append(0);
+			
+			buf.append("-");
+			
+			for(TileNode adj: t.adj) {
+				buf.append(adj.nodeID + ".");
+				
+			}
+			buf.deleteCharAt(buf.length() - 1);
+			buf.append("|");
+		}
+		buf.deleteCharAt(buf.length() - 1);
+		
+		return buf.toString();
 	}
 
 	@Override
