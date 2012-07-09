@@ -295,6 +295,8 @@ public class RequestThread extends Thread {
 			//int index = rand.nextInt(sharedUsers.size());
 			System.out.println("gettign random player");
 			
+			
+			
 			//opUserID = 
 		} else {
 			ResultSet r = selectDB("select userID from users where userName = ?", opUser );
@@ -333,9 +335,14 @@ public class RequestThread extends Thread {
 	
 
 	private boolean createGame(int opUserID, int userID) {
+		Set<Integer> users = new HashSet<Integer>();
+		users.add(opUserID);
+		users.add(userID);
 		
 		//create game 
+		GameState g = model.createNewGame(users);///////
 		
+		model.printState(g);
 		
 		//put game in DB
 		

@@ -43,8 +43,45 @@ public class TileModel extends GameModel{
 
 	@Override
 	protected GameState createNewGame(Set<Integer> users) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("CREATEING GAME ");
+		
+		TileGameState state = new TileGameState(users);
+		
+		
+		
+		
+		int n = 1;
+		
+		for(int i = 0; i < 5; i ++) {
+			if(i % 2 == 0) {
+				for(int j = 0; j < 3; j++) {
+					state.tiles.put("" + i + "" + j, new TileNode(n + 10, i, j));
+					n++;
+					
+				}
+				
+				
+			} else {
+				
+				for(int j = 0; j < 4; j++) {
+					state.tiles.put("" + i + "" + j, new TileNode(n + 10, i, j));
+					n++;
+					
+				}
+				
+			}
+			
+			
+		}
+		
+		
+
+
+		
+	
+		
+		
+		return state;
 	}
 
 	@Override
@@ -53,7 +90,54 @@ public class TileModel extends GameModel{
 		return null;
 	}
 
-
+	@Override
+	protected void printState(GameState state) {
+		TileGameState s = (TileGameState) state;
+		
+		
+		for(int i = 0; i < 5; i ++) {
+			if(i % 2 == 0) {
+				System.out.print("     ");
+				for(int j = 0; j < 3; j++) {
+					
+					System.out.print("  ");
+					System.out.print(s.tiles.get(i + "" + j).nodeID + ":" + s.tiles.get(i + "" + j).owner + ":");
+					
+					
+					if(s.tiles.get(i + "" + j).active) {
+						System.out.print("A");
+					} else {
+						System.out.print("O");
+					}
+					System.out.print("  ");
+				}
+				
+				
+			} else {
+				
+				for(int j = 0; j < 4; j++) {
+					System.out.print("  ");
+					System.out.print(s.tiles.get(i + "" + j).nodeID + ":" + s.tiles.get(i + "" + j).owner + ":");
+					
+					
+					if(s.tiles.get(i + "" + j).active) {
+						System.out.print("A");
+					} else {
+						System.out.print("O");
+					}
+					System.out.print("  ");
+					
+					
+				}
+				
+			}
+			System.out.print("\n\n");
+			
+			
+		}
+		
+		
+	}
 
 	
 	

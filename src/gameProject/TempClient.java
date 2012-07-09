@@ -25,7 +25,9 @@ public class TempClient {
 		
 		con.initCon();
 		
-		con.sendMsg("tileGame");
+		
+		
+		doPreSetMsgs();
 		
 		sendCommandsLoop();
 		//login();
@@ -42,6 +44,14 @@ public class TempClient {
 		}*/
 	}
 	
+	private void doPreSetMsgs() {
+		con.sendMsg("tileGame");
+		con.sendMsg("login:mike,testPass");
+		con.sendMsg("newGame:test3");
+		
+		
+	}
+
 	private void sendCommandsLoop() {
 
 		String in; // MUST ENCRYPT
