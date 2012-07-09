@@ -281,6 +281,19 @@ public class RequestThread extends Thread {
 	/**
 	 * the creates a new game with a known or random user
 	 * 
+	 * format:
+	 * userName,userName,userName
+	 * 
+	 * 
+	 * example:
+	 * mike,test2,test3
+	 * 
+	 * 
+	 * ISSUE: only takes one userID right now this can be easily fixed
+	 * most of the rest of the code is already generalizable for any number 
+	 * of players 
+	 * 
+	 * 
 	 * @param s
 	 */
 	private void makeNewGame(String s) {
@@ -334,6 +347,19 @@ public class RequestThread extends Thread {
 
 	
 
+	/**
+	 * this method creates the game, updates the games table, then updates the usersToGames
+	 * table
+	 * 
+	 * ISSUE: right now it only takes 2 users as the argument but this can be easily fixed 
+	 * to take an unknown number of users. most of the code is already generalized 
+	 * to handle an unknown number of players. 
+	 * 
+	 * 
+	 * @param opUserID
+	 * @param userID
+	 * @return true if it worked false if it didnt 
+	 */
 	private boolean createGame(int opUserID, int userID) {
 		Set<Integer> users = new HashSet<Integer>();
 		users.add(opUserID);
@@ -381,28 +407,12 @@ public class RequestThread extends Thread {
 			}
 		} else {
 			log.log("problem creating game");
-			sendMsg("error");
+			return false;
 		}
-		
-
 
 		
-	
 		
-		
-		
-		
-		
-		//update the usersToGames table for both players
-		
-		
-		
-		
-		//ok here i need to create the game along will the info for both players 
-		//updating all the database tables and what not. 
-		
-		
-		return false;
+		return true;
 		
 	}
 
@@ -445,20 +455,28 @@ public class RequestThread extends Thread {
 	}
 
 	/**
+	 * this method creates a new user 
+	 * 
+	 * it assumes that on client side we checked that:
+	 * 		the email is an email
+	 * 		that username follows the UN rules. only letters and numbers
+	 * 		and check that the pass is strong enough
+	 * 		AS in has 3 of letters, caps, numbers, symbols
+	 * 		and is at least 7 long
+	 * 
+	 * format: 
+	 * username,password,email
+	 * 
+	 * example:
+	 * mike,testPass,testEmail@email.com
+	 * 
+	 *  
+	 * 
 	 * @param string
 	 */
 	private void createNewUser(String s) {
 		boolean working = true;
-		
-		
-		
-		// on client check that the email is an email
-		// that username follows the UN rules. only letters and numbers
-		// and check that the pass is strong enough
-		// AS in has 3 of letters, caps, numbers, symbols
-		// and is atleast 7 long
 
-		// the array is [username,password,email]
 		String[] args = s.split(",");
 
 		// check if username exists
@@ -527,6 +545,12 @@ public class RequestThread extends Thread {
 	 * client there was a problem with the login info. if it is write it adds
 	 * the userID to the current users and send confirmation that the con has
 	 * been made to the client.
+	 * 
+	 * format:
+	 * user,password
+	 * 
+	 * example:
+	 * mike,testPass
 	 * 
 	 * @param string
 	 */
