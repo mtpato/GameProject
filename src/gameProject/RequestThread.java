@@ -340,17 +340,56 @@ public class RequestThread extends Thread {
 		users.add(userID);
 		
 		//create game 
-		GameState s = model.createNewGame(users);///////
+		GameState s = model.createNewGame(users);
 		
-		model.printState(s);
+		//model.printState(s);
 		
 		//put game in DB
 		
 		String compState = model.compressGameState(s);
 		
-		System.out.println(compState);
+		//System.out.println(compState);
 		
-		updateDB("insert into games (state, startTime, finished, game) VALUES (?, NOW(), 0, ?)", compState, model.whatGame());
+		if(!updateDB("insert into games (state, startTime, finished, game) VALUES (?, NOW(), 0, ?)", compState, model.whatGame())) {
+			log.log("problem inserting new game in to DB");
+		}
+		
+		
+		ResultSet r = selectDB("select gameID from games where state = ?", compState);
+
+		
+		int gameID = -1;
+		
+		try {
+			if (r.next()) {
+				System.out.println(r.getInt("gameID")); // return error user exists
+				gameID = r.getInt("gameID");
+			}
+
+		} catch (SQLException e) {
+			log.log("problem with ResultsSet trying to get new game ID trace: "
+					+ e.toString());
+			e.printStackTrace();
+		}
+		
+		if(gameID > -1) {
+			for(int u: users) {
+				if(!updateDB("insert into usersToGames (userID, gameID) VALUES (?, ?)", 
+						String.valueOf(u), String.valueOf(gameID))) {
+					log.log("problem inserting new game in to usersToGames");
+				}
+			}
+		} else {
+			log.log("problem creating game");
+			sendMsg("error");
+		}
+		
+
+
+		
+	
+		
+		
 		
 		
 		

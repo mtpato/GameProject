@@ -219,8 +219,9 @@ public class TileModel extends GameModel{
 
 	@Override
 	protected GameState createNewGame(Set<Integer> users, String type) {
-		// TODO Auto-generated method stub
-		return null;
+		// this is doing nothing right now just passing to the other 
+		//signature 
+		return createNewGame(users);
 	}
 
 	
