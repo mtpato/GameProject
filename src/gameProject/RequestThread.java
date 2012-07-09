@@ -350,11 +350,11 @@ public class RequestThread extends Thread {
 		
 		System.out.println(compState);
 		
+		updateDB("insert into games (state, startTime, finished, game) VALUES (?, NOW(), 0, ?)", compState, model.whatGame());
 		
 		
 		
-		
-		//update the players table for both players
+		//update the usersToGames table for both players
 		
 		
 		

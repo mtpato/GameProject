@@ -280,6 +280,12 @@ public class TileModel extends GameModel{
 		
 		
 	}
+
+	@Override
+	protected String whatGame() {
+		
+		return "tile";
+	}
 	
 
 

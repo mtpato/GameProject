@@ -9,3 +9,4 @@ Time: 2012/07/08 17:49:37 | Class: class gameProject.RequestThread | SECURITY---
 Time: 2012/07/09 09:38:55 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "tileGame" 
 Time: 2012/07/09 09:54:49 | Class: class gameProject.GameServer | problem creating server socket trace: java.net.BindException: Address already in use
 Time: 2012/07/09 09:54:55 | Class: class gameProject.GameServer | problem creating server socket trace: java.net.BindException: Address already in use
+Time: 2012/07/09 12:08:56 | Class: class gameProject.GameServer | problem creating server socket trace: java.net.BindException: Address already in use
