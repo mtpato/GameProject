@@ -14,6 +14,8 @@ public class TileNode {
 	HashSet<TileNode> adj;
 	
 	public TileNode(int nodeID, int x, int y) {
+		tileX = x;
+		tileY = y;
 		this.nodeID = nodeID;
 		tileState = -1;
 		adj = new HashSet<TileNode>();
