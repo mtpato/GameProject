@@ -1,6 +1,7 @@
 package gameProject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
@@ -329,19 +330,17 @@ public class TileModel extends GameModel{
 	}
 	
 	private void createTiles(TileGameState state) {
+		int n = 0;
+		
 		
 		
 		for(int i = 0; i < state.height; i ++) {
+			
 			if(i % 2 == 0) {
 				for(int j = 1; j < state.width * 2 - 1; j+=2) {
-					if(i ==0) {
-						state.tiles.put( "" + j, new TileNode(i * 10 + j , j, i));
-					} else {
-						state.tiles.put("" + i + "" + j, new TileNode(i * 10 + j , j, i));
-					}
 					
-					
-					
+					state.tiles.put( n + "", new TileNode(n, j, i));
+					n++;
 					
 				}
 				
@@ -351,8 +350,8 @@ public class TileModel extends GameModel{
 				for(int j = 0; j < state.width * 2 - 1; j+=2) {
 					
 					
-					state.tiles.put("" + i + "" + j, new TileNode(i * 10 + j , j, i));
-					
+					state.tiles.put("" + n, new TileNode(n, j, i));
+					n++;
 					
 				}
 				
@@ -399,6 +398,11 @@ public class TileModel extends GameModel{
 		System.out.print("\n\n");
 		
 		//print the board
+		
+		ArrayList<TileNode> nodes = new ArrayList<TileNode>(s.tiles.values());
+		
+		//Collections.sort(nodes);
+		
 		for(int i = 0; i < s.height; i ++) {
 			if(i % 2 == 0) {
 				System.out.print("     ");

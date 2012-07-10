@@ -21,6 +21,8 @@ public class TileNode {
 		adj = new HashSet<TileNode>();
 		
 	}
+
+
 	
 	
 	
