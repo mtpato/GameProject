@@ -13,7 +13,7 @@ public abstract class GameModel {
 	 * @param move
 	 * @return the new state of the game after the move
 	 */
-	protected abstract String makeMove(GameState state, String move);
+	protected abstract GameState makeMove(GameState state, String move);
 	
 	/**
 	 * given the state of a game it returns if the game is over 

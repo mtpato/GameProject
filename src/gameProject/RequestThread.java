@@ -383,7 +383,7 @@ public class RequestThread extends Thread {
 		System.out.println(model);
 		GameState s = model.createNewGame(users);
 		
-		//model.printState(s);
+		model.printState(s);
 		
 		//put game in DB
 		
@@ -446,40 +446,91 @@ public class RequestThread extends Thread {
 	}
 
 	/**
+	 * this method executes a more and then sends 
+	 * the new state to the user 
+	 * 
+	 * in Format:
+	 * gameID,move
+	 * 
+	 * 
 	 * @param string
 	 */
-	private void makeMove(String nodeID) {
+	private void makeMove(String input) {
+		//parse command
+		String[] in = input.split(",");
+		
+		
+		
+		//get the state from the DB
+		
+		String compState = getCompString(in[0]);
+		
+		
+		//parse the string from the DB
+		
+		GameState state = model.parseGameState(compState);
+		
+		model.printState(state);
+		//make the move
+		
+		state = model.makeMove(state, in[1]);
+		model.printState(state);
+		
+		//compress the state
+		
+		compState = model.compressGameState(state);
+		
+		//store it in the BD
+		
+		if(!updateDB("UPDATE games SET state = ? WHERE gameID = ?", compState, in[0])) {
+			log.log("problem inserting updating game in make move");
+		}
+		
+		//send it back to the user???????
+		sendMsg(compState);//MAYBE DONT DO
+		
 		
 
 		
 		
 	}
 
-	/**
-	 * this function gets the game state from the database and 
-	 * then sends it to the client
-	 * 
-	 *
-	 * 
-	 * 
-	 * @param string the gameID
-	 */
-	private void getGameState(String gameID) {
+	private String getCompString(String gameID) {
 		ResultSet r = selectDB("SELECT state FROM games WHERE gameID = ?", gameID );
 
 		
 		try {
 			if(r.next()) {
-				sendMsg("state:" + r.getString("state"));
+				return r.getString("state");
 				
 			} else {
-				sendMsg("error:notFound");
+				return null;
 			}
 
 		} catch (SQLException e) {
-			log.log("problem with ResultsSet gettinggames info in getGames trace: "
+			log.log("problem with ResultsSet getting game state trace: "
 					+ e.toString());
 			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * this function gets the game state from the database and 
+	 * then sends it to the client
+	 * 
+	 * 
+	 * @param string the gameID
+	 */
+	private void getGameState(String gameID) {
+		
+		String compState = getCompString( gameID);
+		
+		if(compState != null) {
+			sendMsg("state:" + compState);
+			
+		} else {
+			sendMsg("error:notFound");
 		}
 		
 		

@@ -47,7 +47,9 @@ public class TempClient {
 		
 		doPreSetMsgs();
 		
-		sendCommandsLoop();
+		makeMoves();
+		
+		//sendCommandsLoop();
 		//login();
 		
 		//TalkerThread t = new TalkerThread(con);
@@ -62,11 +64,32 @@ public class TempClient {
 		}*/
 	}
 	
+	private void makeMoves() {
+		String in = "makeMove:"; // MUST ENCRYPT
+		
+		
+		
+		System.out.println("what command: ");
+		in = in + scanner.nextLine();
+		
+		if(!in.equals("q")) {
+
+			con.sendMsg(in);
+			
+			System.out.println("reply: " + con.getReply());
+			
+			makeMoves();
+		}
+		
+	}
+
 	private void doPreSetMsgs() {
 		con.sendMsg("login:mike,testPass");
 		System.out.println(con.getReply());
 		con.sendMsg("newGame:test3");
 		System.out.println(con.getReply());
+		//con.sendMsg("makeMove:80");
+		//System.out.println(con.getReply());
 		
 		
 	}

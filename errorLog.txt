@@ -1431,3 +1431,5 @@ Time: 2012/07/09 15:55:39 | Class: class gameProject.RequestThread | SECURITY---
 Time: 2012/07/09 15:56:43 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "getState:45" 
 Time: 2012/07/09 16:00:07 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "getGamse" 
 Time: 2012/07/09 16:00:52 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "getState:42" 
+Time: 2012/07/09 18:43:03 | Class: class gameProject.GameServer | problem creating server socket trace: java.net.BindException: Address already in use
+Time: 2012/07/09 19:16:52 | Class: class gameProject.GameServer | problem creating server socket trace: java.net.BindException: Address already in use
