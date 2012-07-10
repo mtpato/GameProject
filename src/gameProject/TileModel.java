@@ -218,7 +218,7 @@ public class TileModel extends GameModel{
 	private void assignAdjs(TileGameState state) {
 		
 		for (TileNode t : state.tiles.values()) {
-			if (t.tileX == 0) {
+			/*if (t.tileX == 0) {
 				if (state.tiles.containsKey( "" + (t.tileY - 1))) {
 					t.adj.add(state.tiles.get( "" + (t.tileY - 1)));
 				}
@@ -256,8 +256,26 @@ public class TileModel extends GameModel{
 				if (state.tiles.containsKey((t.tileX + 1) + "" + (t.tileY + 1))) {
 					t.adj.add(state.tiles.get((t.tileX + 1) + "" + (t.tileY + 1)));
 				}
-			}
+			}*/
 			
+			if (state.tiles.containsKey((t.tileX - 1) + "" + (t.tileY - 1))) {
+				t.adj.add(state.tiles.get((t.tileX - 1) + "" + (t.tileY - 1)));
+			}
+			if (state.tiles.containsKey((t.tileX - 1) + "" + (t.tileY + 1))) {
+				t.adj.add(state.tiles.get((t.tileX - 1) + "" + (t.tileY + 1)));
+			}
+			if (state.tiles.containsKey(t.tileX + "" + (t.tileY - 2))) {
+				t.adj.add(state.tiles.get(t.tileX + "" + (t.tileY - 2)));
+			}
+			if (state.tiles.containsKey(t.tileX + "" + (t.tileY + 2))) {
+				t.adj.add(state.tiles.get(t.tileX + "" + (t.tileY + 2)));
+			}
+			if (state.tiles.containsKey((t.tileX + 1) + "" + (t.tileY - 1))) {
+				t.adj.add(state.tiles.get((t.tileX + 1) + "" + (t.tileY - 1)));
+			}
+			if (state.tiles.containsKey((t.tileX + 1) + "" + (t.tileY + 1))) {
+				t.adj.add(state.tiles.get((t.tileX + 1) + "" + (t.tileY + 1)));
+			}
 
 		}
 
