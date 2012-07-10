@@ -11,6 +11,7 @@ public class TileGameState implements GameState {
 	int width;
 	int height;
 	HashMap<Integer,Integer> scores;
+	boolean over = false;
 	
 	
 	public TileGameState(Set<Integer> players, int height, int width) {

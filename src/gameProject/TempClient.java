@@ -8,6 +8,8 @@ public class TempClient {
 	boolean connected = true;
 	Scanner scanner = new Scanner(System.in);
 	SocketConnector con;
+	TileModel model = new TileModel();
+	
 	
 	/**
 	 * @param args
@@ -72,11 +74,18 @@ public class TempClient {
 		System.out.println("what command: ");
 		in = in + scanner.nextLine();
 		
-		if(!in.equals("q")) {
+		if(!in.equals("makeMove:q")) {
 
 			con.sendMsg(in);
 			
-			System.out.println("reply: " + con.getReply());
+			String reply = con.getReply();
+			
+			GameState s = model.parseGameState(reply);
+			
+			
+			//System.out.println("reply: " + con.getReply());
+			
+			model.printState(s);
 			
 			makeMoves();
 		}

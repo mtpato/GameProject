@@ -21,8 +21,8 @@ public class TileModel extends GameModel{
 	@Override
 	protected GameState makeMove(GameState state, String move) {
 		TileGameState s = (TileGameState) state;
-		//NEED TO FIX LATER SEE COMMENT BELOW ON NEXT LINE
-		TileNode moveNode = s.tiles.get(String.valueOf(Integer.valueOf(move) - 10));//=10 here because that is how it is displayed on the screen
+		TileNode moveNode = s.tiles.get(String.valueOf(Integer.valueOf(move)));
+		
 		
 		//make the move 
 		moveNode.active = true;
@@ -38,7 +38,7 @@ public class TileModel extends GameModel{
 			
 			
 		}
-		//update scores
+
 		
 		//check if the game is over 
 		
@@ -87,6 +87,9 @@ public class TileModel extends GameModel{
 		}
 
 		parseBoard(state, args.get("board"));
+		
+		if(args.get("over").equals("0")) state.over = false;
+		else state.over = true;
 
 		
 		return state;
@@ -134,7 +137,7 @@ public class TileModel extends GameModel{
 
 	/* (non-Javadoc)
 	 * the string looks like this:
-	 * players=userID-score|userID-score|userID-score...,h=height,w=width,board=node|node|node|node...
+	 * players=userID-score|userID-score|userID-score...,h=height,w=width,board=node|node|node|node...,over=0or1
 	 * 
 	 * a node looks like this:
 	 * nodeID-x-y-owner-active-adjList
@@ -143,7 +146,7 @@ public class TileModel extends GameModel{
 	 * nodeID.nodeID.nodeID.nodeID...
 	 * 
 	 * example: 
-	 * players=1-100|2-20,h=9,w=7,board=10-1-1-1-0-20.21.32.40|11-1-2-2-1-21.22.33.49....
+	 * players=1-100|2-20,h=9,w=7,board=10-1-1-1-0-20.21.32.40|11-1-2-2-1-21.22.33.49....,over=0
 	 * 
 	 */
 	@Override
@@ -183,6 +186,11 @@ public class TileModel extends GameModel{
 			buf.append("|");
 		}
 		buf.deleteCharAt(buf.length() - 1);
+		
+		buf.append(",over=");
+		
+		if(s.over) buf.append(1);
+		else buf.append(0);
 		
 		return buf.toString();
 	}
@@ -339,6 +347,8 @@ public class TileModel extends GameModel{
 	
 	@Override
 	protected void printState(GameState state) {
+		
+		System.out.println("PRINTING STATE");
 		TileGameState s = (TileGameState) state;
 		
 		ArrayList<TileNode> nodes = new ArrayList<TileNode>(s.tiles.values());
@@ -364,7 +374,11 @@ public class TileModel extends GameModel{
 			System.out.print(p + ":" +s.scores.get(p) + "   ");
 		}
 		
+		
+		
 		System.out.print("\n\n");
+		
+		System.out.print("Game over: " + s.over + "\n");
 		
 		//print the board
 		
