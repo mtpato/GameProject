@@ -378,14 +378,19 @@ public class TileModel extends GameModel{
 		
 		
 		//print the adj set sizes
-		/*for(TileNode t: s.tiles.values()) {
-			System.out.println(t.nodeID + ": " + t.adj.size());		
-		}*/
+		for(TileNode t: s.tiles.values()) {
+			System.out.print(t.nodeID + ": ");		
+			
+			for(TileNode tn: t.adj) {
+				System.out.print(tn.nodeID + ".");
+			}
+			System.out.print("\n");
+		}
 		
 		
 		//print scores
 		
-		System.out.print("\n                    SCORES\n                ");
+		System.out.print("\n                    SCORES\n                  ");
 		
 		for(int p: s.players) {
 			System.out.print(p + ":" +s.scores.get(p) + "   ");
@@ -402,7 +407,7 @@ public class TileModel extends GameModel{
 					System.out.print("  ");
 					
 					if(i == 0) {
-						System.out.print(s.tiles.get("" + j).nodeID + 10 +  ":" 
+						System.out.print(s.tiles.get("" + j).nodeID /*+ 10*/ +  ":" 
 								+ s.tiles.get("" + j).owner + ":");
 						
 						if(s.tiles.get("" + j).active) {
@@ -413,7 +418,7 @@ public class TileModel extends GameModel{
 						System.out.print("  ");
 						
 					} else {
-						System.out.print(s.tiles.get(i + "" + j).nodeID + 10 +  ":" 
+						System.out.print(s.tiles.get(i + "" + j).nodeID /*+ 10*/ +  ":" 
 								+ s.tiles.get(i + "" + j).owner + ":");
 						
 						if(s.tiles.get(i + "" + j).active) {
@@ -431,7 +436,7 @@ public class TileModel extends GameModel{
 				
 				for(int j = 0; j < s.width * 2 - 1; j+=2) {
 					System.out.print("  ");
-					System.out.print(s.tiles.get(i + "" + j).nodeID + 10 + ":" + s.tiles.get(i + "" + j).owner + ":");
+					System.out.print(s.tiles.get(i + "" + j).nodeID /*+ 10*/ + ":" + s.tiles.get(i + "" + j).owner + ":");
 					
 					
 					if(s.tiles.get(i + "" + j).active) {
