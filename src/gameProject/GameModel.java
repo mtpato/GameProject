@@ -6,8 +6,7 @@ public abstract class GameModel {
 	
 	/**
 	 * given a string representing the state of the game and a move to be made 
-	 * this function makes the move and then returns a string that represents 
-	 * the new state of the game 
+	 * this function makes the move and then returns the new state of the game
 	 * 
 	 * @param state
 	 * @param move
@@ -73,8 +72,19 @@ public abstract class GameModel {
 	protected abstract GameState createNewGame(Set<Integer> users, String type);
 	
 	
+	/**
+	 * this returns the name of the game that this model is for 
+	 * 
+	 * @return game name
+	 */
 	protected abstract String whatGame();
 	
+	/**
+	 * this method prints the state of the game. this is mostly for 
+	 * debugging and coding 
+	 * 
+	 * @param state
+	 */
 	protected abstract void printState(GameState state);
 	
 	

@@ -42,6 +42,8 @@ public class TileModel extends GameModel{
 		
 		//check if the game is over 
 		
+		if(isOver(s)) s.over = true;
+		
 		return s;
 	}
 
@@ -49,7 +51,23 @@ public class TileModel extends GameModel{
 
 	@Override
 	protected boolean isOver(GameState state) {
-		// TODO Auto-generated method stub
+		//here we get the win state we are still deciding what that is
+		//for now it will be when all the tiles are active
+		TileGameState s = (TileGameState) state;
+		
+		
+		int totalScore = 0;
+		
+		for(int points: s.scores.values()) {
+			totalScore = totalScore + points;
+		}
+		
+		if(totalScore == s.tiles.size()){
+			return true;
+		}
+
+		
+		
 		return false;
 	}
 
@@ -197,8 +215,23 @@ public class TileModel extends GameModel{
 
 	@Override
 	protected int winner(GameState state) {
-		// TODO Auto-generated method stub
-		return 0;
+		TileGameState s = (TileGameState) state;
+		
+		
+		int winner = -1;
+		
+		int max = -1;
+		
+		
+		for(int player: s.scores.keySet()) {
+			if(s.scores.get(player) > max) {
+				winner = player;
+			}
+		}
+		
+		
+		
+		return winner;
 	}
 
 	@Override
