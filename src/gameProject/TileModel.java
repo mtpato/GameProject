@@ -197,7 +197,7 @@ public class TileModel extends GameModel{
 	protected GameState createNewGame(Set<Integer> users) {
 		System.out.println("CREATEING GAME ");
 		
-		TileGameState state = new TileGameState(users, 9, 5);
+		TileGameState state = new TileGameState(users, 9, 9);
 	
 		for(int p: state.players) {
 			state.scores.put(p, 0);//start with scores set to 0
@@ -217,67 +217,27 @@ public class TileModel extends GameModel{
 	
 	
 	private void assignAdjs(TileGameState state) {
+		HashMap<String,TileNode> pointToNode = new HashMap<String,TileNode>();
 		
-		for (TileNode t : state.tiles.values()) {
-			/*if (t.tileX == 0) {
-				if (state.tiles.containsKey( "" + (t.tileY - 1))) {
-					t.adj.add(state.tiles.get( "" + (t.tileY - 1)));
-				}
-				if (state.tiles.containsKey("" + (t.tileY + 1))) {
-					t.adj.add(state.tiles.get("" + (t.tileY + 1)));
-				}
-				if (state.tiles.containsKey("" + (t.tileY - 2))) {
-					t.adj.add(state.tiles.get("" + (t.tileY - 2)));
-				}
-				if (state.tiles.containsKey("" + (t.tileY + 2))) {
-					t.adj.add(state.tiles.get("" + (t.tileY + 2)));
-				}
-				if (state.tiles.containsKey("" + (t.tileY - 1))) {
-					t.adj.add(state.tiles.get( "" + (t.tileY - 1)));
-				}
-				if (state.tiles.containsKey("" + (t.tileY + 1))) {
-					t.adj.add(state.tiles.get("" + (t.tileY + 1)));
-				}
-			} else {
-				if (state.tiles.containsKey((t.tileX - 1) + "" + (t.tileY - 1))) {
-					t.adj.add(state.tiles.get((t.tileX - 1) + "" + (t.tileY - 1)));
-				}
-				if (state.tiles.containsKey((t.tileX - 1) + "" + (t.tileY + 1))) {
-					t.adj.add(state.tiles.get((t.tileX - 1) + "" + (t.tileY + 1)));
-				}
-				if (state.tiles.containsKey(t.tileX + "" + (t.tileY - 2))) {
-					t.adj.add(state.tiles.get(t.tileX + "" + (t.tileY - 2)));
-				}
-				if (state.tiles.containsKey(t.tileX + "" + (t.tileY + 2))) {
-					t.adj.add(state.tiles.get(t.tileX + "" + (t.tileY + 2)));
-				}
-				if (state.tiles.containsKey((t.tileX + 1) + "" + (t.tileY - 1))) {
-					t.adj.add(state.tiles.get((t.tileX + 1) + "" + (t.tileY - 1)));
-				}
-				if (state.tiles.containsKey((t.tileX + 1) + "" + (t.tileY + 1))) {
-					t.adj.add(state.tiles.get((t.tileX + 1) + "" + (t.tileY + 1)));
-				}
-			}*/
+		
+		for(TileNode n: state.tiles.values()) {
+			pointToNode.put(n.tileX + "," + n.tileY  , n);
+		}
+		
+		
+		
+		
+		for (TileNode n : pointToNode.values()) {
 			
-			if (state.tiles.containsKey((t.tileX - 1) + "" + (t.tileY - 1))) {
-				t.adj.add(state.tiles.get((t.tileX - 1) + "" + (t.tileY - 1)));
-			}
-			if (state.tiles.containsKey((t.tileX - 1) + "" + (t.tileY + 1))) {
-				t.adj.add(state.tiles.get((t.tileX - 1) + "" + (t.tileY + 1)));
-			}
-			if (state.tiles.containsKey(t.tileX + "" + (t.tileY - 2))) {
-				t.adj.add(state.tiles.get(t.tileX + "" + (t.tileY - 2)));
-			}
-			if (state.tiles.containsKey(t.tileX + "" + (t.tileY + 2))) {
-				t.adj.add(state.tiles.get(t.tileX + "" + (t.tileY + 2)));
-			}
-			if (state.tiles.containsKey((t.tileX + 1) + "" + (t.tileY - 1))) {
-				t.adj.add(state.tiles.get((t.tileX + 1) + "" + (t.tileY - 1)));
-			}
-			if (state.tiles.containsKey((t.tileX + 1) + "" + (t.tileY + 1))) {
-				t.adj.add(state.tiles.get((t.tileX + 1) + "" + (t.tileY + 1)));
-			}
+			checkNodeAddHash(n, n.tileX - 2, n.tileY + 0, pointToNode);
+			checkNodeAddHash(n, n.tileX - 1, n.tileY - 1, pointToNode);
+			checkNodeAddHash(n, n.tileX + 1, n.tileY - 1, pointToNode);
+			checkNodeAddHash(n, n.tileX + 2, n.tileY + 0, pointToNode);
+			checkNodeAddHash(n, n.tileX + 1, n.tileY + 1, pointToNode);
+			checkNodeAddHash(n, n.tileX - 1, n.tileY + 1, pointToNode);
+			
 
+		
 		}
 
 			
@@ -287,6 +247,15 @@ public class TileModel extends GameModel{
 	
 		
 	
+
+	private void checkNodeAddHash(TileNode n, int x, int y, HashMap<String, TileNode> hash) {
+		if(hash.containsKey(x + "," + y)) {
+			n.adj.add(hash.get(x + "," + y));
+		}
+		
+	}
+
+
 
 	private void assignTiles(TileGameState state, Set<Integer> users) {
 		ArrayList<Integer> userList = new ArrayList<Integer>(users);
@@ -334,29 +303,26 @@ public class TileModel extends GameModel{
 		
 		
 		
-		for(int i = 0; i < state.height; i ++) {
+		for(int y = 0; y < state.height; y ++) {
 			
-			if(i % 2 == 0) {
-				for(int j = 1; j < state.width * 2 - 1; j+=2) {
+			
+			if(y % 2 == 0) {
+				for(int x = 1; x < state.width; x += 2) {
 					
-					state.tiles.put( n + "", new TileNode(n, j, i));
+					state.tiles.put( n + "", new TileNode(n, x, y));
 					n++;
 					
 				}
-				
-				
 			} else {
-				
-				for(int j = 0; j < state.width * 2 - 1; j+=2) {
+				for(int x = 0; x < state.width; x += 2) {
 					
-					
-					state.tiles.put("" + n, new TileNode(n, j, i));
+					state.tiles.put( n + "", new TileNode(n, x, y));
 					n++;
 					
 				}
-				
 			}
-			
+				
+	
 			
 		}
 	}
@@ -375,10 +341,13 @@ public class TileModel extends GameModel{
 	protected void printState(GameState state) {
 		TileGameState s = (TileGameState) state;
 		
+		ArrayList<TileNode> nodes = new ArrayList<TileNode>(s.tiles.values());
+		
+		Collections.sort(nodes, new TileNodeComparator());
 		
 		//print the adj set sizes
-		for(TileNode t: s.tiles.values()) {
-			System.out.print(t.nodeID + ": ");		
+		for(TileNode t: nodes) {
+			System.out.print(t.nodeID + ":x=" + t.tileX + ":y=" +t.tileY + ":");		
 			
 			for(TileNode tn: t.adj) {
 				System.out.print(tn.nodeID + ".");
@@ -399,65 +368,46 @@ public class TileModel extends GameModel{
 		
 		//print the board
 		
-		ArrayList<TileNode> nodes = new ArrayList<TileNode>(s.tiles.values());
 		
-		//Collections.sort(nodes);
+		//int n = 0;
 		
-		for(int i = 0; i < s.height; i ++) {
-			if(i % 2 == 0) {
-				System.out.print("     ");
-				for(int j = 1; j < s.width * 2 - 1; j+=2) {
-					
-					System.out.print("  ");
-					
-					if(i == 0) {
-						System.out.print(s.tiles.get("" + j).nodeID /*+ 10*/ +  ":" 
-								+ s.tiles.get("" + j).owner + ":");
-						
-						if(s.tiles.get("" + j).active) {
-							System.out.print("A");
-						} else {
-							System.out.print("n");
-						}
-						System.out.print("  ");
-						
-					} else {
-						System.out.print(s.tiles.get(i + "" + j).nodeID /*+ 10*/ +  ":" 
-								+ s.tiles.get(i + "" + j).owner + ":");
-						
-						if(s.tiles.get(i + "" + j).active) {
-							System.out.print("A");
-						} else {
-							System.out.print("n");
-						}
-						System.out.print("  ");
-					}
-
+		
+		for(TileNode n : nodes) {
+			
+			if(n.tileY % 2 == 0) {
+				if(n.tileX == 1) {
+					System.out.print("\n\n        ");
 				}
 				
-				
-			} else {
-				
-				for(int j = 0; j < s.width * 2 - 1; j+=2) {
-					System.out.print("  ");
-					System.out.print(s.tiles.get(i + "" + j).nodeID /*+ 10*/ + ":" + s.tiles.get(i + "" + j).owner + ":");
-					
-					
-					if(s.tiles.get(i + "" + j).active) {
-						System.out.print("A");
-					} else {
-						System.out.print("n");
-					}
-					System.out.print("  ");
-					
-					
+			} 
+			
+			if(n.tileY % 2 == 1) {
+				if(n.tileX == 0) {
+					System.out.print("\n\n   ");
 				}
 				
 			}
-			System.out.print("\n\n");
 			
 			
+			if(n.nodeID < 10) {
+				System.out.print("0");
+			}
+			
+			System.out.print(n.nodeID + ":" + n.owner + ":");
+			
+			if(n.active) {
+				System.out.print("A");
+			} else {
+				System.out.print("n");
+			}
+			
+			System.out.print("    ");
+			
+
 		}
+		
+		System.out.print("\n\n");
+		
 		
 		
 	}
