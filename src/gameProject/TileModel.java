@@ -299,7 +299,7 @@ public class TileModel extends GameModel{
 
 
 	/**
-	 * this assigns 10 random tiles to the players 
+	 * this assigns n random tiles to the players 
 	 * 
 	 * 
 	 * @param state
