@@ -470,11 +470,11 @@ public class RequestThread extends Thread {
 		
 		GameState state = model.parseGameState(compState);
 		
-		model.printState(state);
+		//model.printState(state);
 		//make the move
 		
 		state = model.makeMove(state, in[1]);
-		model.printState(state);
+		//model.printState(state);
 		
 		//compress the state
 		

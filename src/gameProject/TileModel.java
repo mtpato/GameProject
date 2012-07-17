@@ -38,6 +38,8 @@ public class TileModel extends GameModel{
 			
 			
 		}
+		
+		drawTile(s, moveNode.owner);
 
 		
 		//check if the game is over 
@@ -45,6 +47,40 @@ public class TileModel extends GameModel{
 		if(isOver(s)) s.over = true;
 		
 		return s;
+	}
+
+
+
+	/**
+	 * if there are still tiles that are not owned this 
+	 * method draws a random tile form the tiles that are left 
+	 * and assigns it to the player that just moved.
+	 * 
+	 * @param s
+	 * @param owner 
+	 */
+	private void drawTile(TileGameState s, int owner) {
+		ArrayList<TileNode> tiles = new ArrayList<TileNode>();
+		
+		for(TileNode t: s.tiles.values()) {
+			if(t.owner == -1) {
+				tiles.add(t);
+				System.out.println("tileAdded: " + t.nodeID + " owner: " + t.owner);
+			}
+		}
+		
+		if(tiles.size() > 0) {
+			int ran = rand.nextInt(tiles.size());
+			System.out.println("tileAdded: " + tiles.get(ran).nodeID + " owner: " + tiles.get(ran).owner);
+			
+			tiles.get(ran).owner = owner;
+			System.out.println("tileAdded: " + tiles.get(ran).nodeID + " owner: " + tiles.get(ran).owner);
+			
+
+		}
+		
+		
+		
 	}
 
 
@@ -85,7 +121,7 @@ public class TileModel extends GameModel{
 			args.put(temp[0], temp[1]);
 		}
 		
-		System.out.println(args);
+		//System.out.println(args);
 		HashSet<Integer> players = new HashSet<Integer>();
 		
 		TileGameState state = new TileGameState(players, Integer.valueOf(args.get("h")), Integer.valueOf(args.get("w")));
@@ -96,7 +132,7 @@ public class TileModel extends GameModel{
 		//System.out.println(temp);
 		
 		for(String line: temp.split("\\|")) {
-			String[] splitTemp = line.split("-");
+			String[] splitTemp = line.split("!");
 			//System.out.println(line);
 			
 			state.players.add(Integer.valueOf(splitTemp[0]));
@@ -120,7 +156,7 @@ public class TileModel extends GameModel{
 		
 		//make the nodes
 		for(String nodeString: splitBoard) {
-			String[] nodeInfo = nodeString.split("-");
+			String[] nodeInfo = nodeString.split("!");
 			
 			TileNode n = new TileNode(Integer.valueOf(nodeInfo[0]), 
 									  Integer.valueOf(nodeInfo[1]),
@@ -138,7 +174,7 @@ public class TileModel extends GameModel{
 		
 		//add adjs
 		for(String nodeString: splitBoard) {
-			String[] nodeInfo = nodeString.split("-");
+			String[] nodeInfo = nodeString.split("!");
 			
 			String[] adjs = nodeInfo[5].split("\\.");
 			
@@ -155,10 +191,10 @@ public class TileModel extends GameModel{
 
 	/* (non-Javadoc)
 	 * the string looks like this:
-	 * players=userID-score|userID-score|userID-score...,h=height,w=width,board=node|node|node|node...,over=0or1
+	 * players=username!userID!score|username!userID!score...,h=height,w=width,board=node|node|node|node...,over=0or1
 	 * 
 	 * a node looks like this:
-	 * nodeID-x-y-owner-active-adjList
+	 * nodeID!x!y!owner!active!adjList
 	 * 
 	 * an adjList looks like this:
 	 * nodeID.nodeID.nodeID.nodeID...
@@ -176,7 +212,7 @@ public class TileModel extends GameModel{
 		
 		buf.append("players=");
 		for(int p: s.players) {
-			buf.append(p + "-" + s.scores.get(p) +"|");
+			buf.append(p + "!" + s.scores.get(p) +"|");
 			
 		}
 		buf.deleteCharAt(buf.length() - 1);
@@ -188,13 +224,13 @@ public class TileModel extends GameModel{
 		
 		buf.append(",board=");
 		for(TileNode t: s.tiles.values()) {
-			buf.append(t.nodeID + "-" + t.tileX + "-" + t.tileY + "-" +
-					t.owner + "-");
+			buf.append(t.nodeID + "!" + t.tileX + "!" + t.tileY + "!" +
+					t.owner + "!");
 			
 			if(t.active) buf.append(1);
 			else buf.append(0);
 			
-			buf.append("-");
+			buf.append("!");
 			
 			for(TileNode adj: t.adj) {
 				buf.append(adj.nodeID + ".");
