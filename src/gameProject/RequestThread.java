@@ -580,6 +580,8 @@ public class RequestThread extends Thread {
 		
 		String gamesString = makeGamesString(games);
 		
+		System.out.println(gamesString);
+		
 		sendMsg(gamesString);
 		
 	}
@@ -609,9 +611,9 @@ public class RequestThread extends Thread {
 			buf.append(gID + "|" + games.get(gID)+ ",");
 		}
 		
-		for(String s: games.values()) {
+		/*for(String s: games.values()) {
 			buf.append(s + ",");
-		}
+		}*/
 		
 		buf.deleteCharAt(buf.length() - 1);
 		

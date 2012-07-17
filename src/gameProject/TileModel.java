@@ -298,44 +298,31 @@ public class TileModel extends GameModel{
 
 
 
+	/**
+	 * this assigns 10 random tiles to the players 
+	 * 
+	 * 
+	 * @param state
+	 * @param users
+	 */
 	private void assignTiles(TileGameState state, Set<Integer> users) {
 		ArrayList<Integer> userList = new ArrayList<Integer>(users);
+		ArrayList<TileNode> tiles = new ArrayList<TileNode>(state.tiles.values());
 		
+		
+		int startNum = 10; //the number of tiles each player gets at the start
+		
+		int numPlayers = userList.size();
 		int p;
-		int aCount = 0;
-		int bCount = 0;
 		
-		for(TileNode t: state.tiles.values()) {
-			p = rand.nextInt(2);
+		
+		for(int i = 0; i < startNum * numPlayers; i++) {
+			p = rand.nextInt(tiles.size());
 			
-			
-			//System.out.println(t.nodeID);
-			
-			if(aCount == state.tiles.size() / 2) {
-				t.owner = userList.get(1);
-				bCount++;
-				
-			} else if(bCount == state.tiles.size() / 2) {
-				t.owner = userList.get(0);
-				aCount++;
-				
-			} else if(p == 0) {
-				t.owner = userList.get(0);
-				aCount++;
-				
-			} else {
-				t.owner = userList.get(1);
-				bCount++;
-			}
-			
-			
-			
+			TileNode t = tiles.remove(p);
+			t.owner = userList.get(i % numPlayers);
+	
 		}
-		
-		System.out.println("A: " + aCount);
-		System.out.println("B: " + bCount);
-
-		
 		
 	}
 	
