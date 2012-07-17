@@ -343,7 +343,12 @@ public class RequestThread extends Thread {
 			
 			
 			if(opUserID > -1) {
-				if(createGame(opUserID, this.userID)) {
+				
+				Set<Integer> users = new HashSet<Integer>();
+				users.add(opUserID);
+				users.add(this.userID);
+				
+				if(createGame(users)) {
 					sendMsg("done:gameCreated");
 				} else {
 					sendMsg("error:problemCreatingGame");
@@ -363,20 +368,16 @@ public class RequestThread extends Thread {
 	/**
 	 * this method creates the game, updates the games table, then updates the usersToGames
 	 * table
-	 * 
-	 * ISSUE: right now it only takes 2 users as the argument but this can be easily fixed 
-	 * to take an unknown number of users. most of the code is already generalized 
-	 * to handle an unknown number of players. 
-	 * 
-	 * 
-	 * @param opUserID
-	 * @param userID
+	 * @param users, the list of userIDs to make the game with
 	 * @return true if it worked false if it didnt 
 	 */
-	private boolean createGame(int opUserID, int userID) {
-		Set<Integer> users = new HashSet<Integer>();
-		users.add(opUserID);
-		users.add(userID);
+	private boolean createGame(Set<Integer> users) {
+		
+		
+		
+		
+		
+		
 		
 		//create game 
 		
