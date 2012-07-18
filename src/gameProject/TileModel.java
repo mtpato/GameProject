@@ -144,6 +144,8 @@ public class TileModel extends GameModel{
 		
 		if(args.get("over").equals("0")) state.over = false;
 		else state.over = true;
+		
+		state.turn = Integer.valueOf(args.get("turn"));
 
 		
 		return state;
@@ -187,11 +189,15 @@ public class TileModel extends GameModel{
 			
 		}
 		
+		
+		
+		
+		
 	}
 
 	/* (non-Javadoc)
 	 * the string looks like this:
-	 * players=username!userID!score|username!userID!score...,h=height,w=width,board=node|node|node|node...,over=0or1
+	 * players=username!userID!score|username!userID!score...,h=height,w=width,board=node|node|node|node...,over=0or1,turn=userID
 	 * 
 	 * a node looks like this:
 	 * nodeID!x!y!owner!active!adjList
@@ -246,8 +252,13 @@ public class TileModel extends GameModel{
 		if(s.over) buf.append(1);
 		else buf.append(0);
 		
+		buf.append(",turn=" + s.turn);
+		
 		return buf.toString();
 	}
+	
+	
+	
 
 	@Override
 	protected int winner(GameState state) {
@@ -274,11 +285,20 @@ public class TileModel extends GameModel{
 	protected GameState createNewGame(Set<Integer> users) {
 		System.out.println("CREATEING GAME ");
 		
+		ArrayList<Integer> userList = new ArrayList<Integer>(users);
+		
 		TileGameState state = new TileGameState(users, 9, 9);
 	
 		for(int p: state.players) {
 			state.scores.put(p, 0);//start with scores set to 0
 		}
+		
+		
+		int turn = rand.nextInt(userList.size());
+		
+		state.turn = userList.get(turn);
+		
+		
 		
 		createTiles(state);
 		
