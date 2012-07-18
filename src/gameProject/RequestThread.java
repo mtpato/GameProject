@@ -434,6 +434,7 @@ public class RequestThread extends Thread {
 
 	private void quitGame() {
 		quit = true;
+		sendMsg("done");
 		
 	}
 
@@ -444,6 +445,7 @@ public class RequestThread extends Thread {
 		signedIn = false;
 		sharedUsers.remove(userID);
 		this.userID = -1;
+		sendMsg("done");
 	}
 
 	/**
