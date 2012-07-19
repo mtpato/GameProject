@@ -249,7 +249,10 @@ public class RequestThread extends Thread {
 			quitGame();
 			validMsg = true;
 		} else if(!signedIn) {
-			if (parsedMsg[0].equals("login")) {
+			if (parsedMsg[0].equals("keyLogin")) {
+				checkAuthKey(parsedMsg[1]);
+				validMsg = true;
+			} else if (parsedMsg[0].equals("login")) {
 				checkLogin(parsedMsg[1]);
 				validMsg = true;
 			} else if (parsedMsg[0].equals("newUser")) {
@@ -285,6 +288,69 @@ public class RequestThread extends Thread {
 		}
 		
 		
+
+	}
+
+	/**
+	 * this checks for login with the authentication key
+	 * 
+	 * 
+	 * FORMAT:
+	 * keyLogin:userID,authKey
+	 * 
+	 * 
+	 * EXAMPLE:
+	 * keyLogin:mike,1h2i2bb23n48d9snd9nf9snf
+	 * 
+	 * @param string
+	 */
+	private void checkAuthKey(String string) {
+		String[] parsedLog = string.split(",");
+
+		boolean correct;
+		int userID = authenticateKey(parsedLog);
+
+		if (userID > -1) {// check DATABASE here
+			correct = true;
+		} else {
+			correct = false;
+		}
+
+		if (correct) {
+			sharedUsers.add(userID);
+			this.userID = userID;
+			signedIn = true;
+			
+			
+			sendMsg("done");// use done for all andshake
+
+		} else {
+			sendMsg("error");
+			// close connection
+		}
+		
+	}
+	
+	private int authenticateKey(String[] parsedLog) {
+
+		int userID = -1;
+
+		ResultSet r = selectDB(
+				"select users.userID from users join login on users.userID=login.userID where userName = ?  AND authKey = PASSWORD(?);",
+				parsedLog[0], parsedLog[1]);
+
+		try {
+			if (r.next()) {
+				userID = r.getInt("userID");
+			}
+
+		} catch (SQLException e) {
+			log.log("problem with ResultsSet checking for userID in authenticateKey trace: "
+					+ e.toString());
+			e.printStackTrace();
+		}
+
+		return userID;
 
 	}
 
@@ -375,11 +441,7 @@ public class RequestThread extends Thread {
 	 */
 	private boolean createGame(Set<Integer> users) {
 		
-		
-		
-		
-		
-		
+
 		
 		//create game 
 		

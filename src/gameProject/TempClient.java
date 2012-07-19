@@ -49,7 +49,8 @@ public class TempClient {
 		
 		doPreSetMsgs();
 		
-		makeMoves();
+		//makeMoves();
+		sendCommandsLoop();
 		
 		//sendCommandsLoop();
 		//login();
@@ -88,6 +89,7 @@ public class TempClient {
 			model.printState(s);
 			
 			makeMoves();
+			
 		}
 		
 	}

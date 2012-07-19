@@ -1493,3 +1493,8 @@ Time: 2012/07/17 15:22:46 | Class: class gameProject.RequestThread | SECURITY---
 Time: 2012/07/17 15:22:53 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "ITS SHAPPED LIKE A FLOPPY DISK" 
 Time: 2012/07/17 15:27:42 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "logout" 
 Time: 2012/07/19 17:22:00 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "login:patom,apple" 
+Time: 2012/07/19 18:02:18 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "keyLogin:mike,3f37cu2101pts8jj5k0ceh1tn1" 
+Time: 2012/07/19 18:05:51 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "keyLogin:apple,akjhsdkawd" 
+Time: 2012/07/19 18:05:59 | Class: class gameProject.GameServer | problem creating server socket trace: java.net.BindException: Address already in use
+Time: 2012/07/19 18:06:37 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "keyLogin:mike,abg6737248ht9jtk1svm1n50ps" 
+Time: 2012/07/19 18:08:07 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "getState:150" 
