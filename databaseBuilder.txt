@@ -51,6 +51,7 @@ CREATE TABLE login
 (
 userID INT NOT NULL,
 password VARCHAR(255),
+authKey VARCHAR(255),
 
 PRIMARY KEY (userID),
 FOREIGN KEY (userID) REFERENCES users(userID)

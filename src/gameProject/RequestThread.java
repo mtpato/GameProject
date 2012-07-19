@@ -740,6 +740,9 @@ public class RequestThread extends Thread {
 			sharedUsers.add(userID);
 			this.userID = userID;
 			signedIn = true;
+			
+			//String authKey = generateAuthKey();
+			
 			sendMsg("done");// use done for all andshake
 
 		} else {
