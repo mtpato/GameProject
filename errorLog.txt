@@ -1492,3 +1492,4 @@ Time: 2012/07/17 15:22:40 | Class: class gameProject.RequestThread | SECURITY---
 Time: 2012/07/17 15:22:46 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "FUCK YOU IN YOUR SERVER ASSHOLE" 
 Time: 2012/07/17 15:22:53 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "ITS SHAPPED LIKE A FLOPPY DISK" 
 Time: 2012/07/17 15:27:42 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "logout" 
+Time: 2012/07/19 17:22:00 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "login:patom,apple" 

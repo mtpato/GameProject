@@ -5,7 +5,9 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.math.BigInteger;
 import java.net.Socket;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -741,15 +743,37 @@ public class RequestThread extends Thread {
 			this.userID = userID;
 			signedIn = true;
 			
-			//String authKey = generateAuthKey();
+			String authKey = generateAuthKey();
 			
-			sendMsg("done");// use done for all andshake
+			storeAuthKey(userID,authKey);
+			
+			sendMsg("done:" + authKey);// use done for all andshake
 
 		} else {
 			sendMsg("error");
 			// close connection
 		}
 
+	}
+
+	private void storeAuthKey(int userID, String authKey) {
+		updateDB("UPDATE login SET authKey = PASSWORD(?) WHERE userID = ?",
+				authKey, String.valueOf(userID));
+		
+	}
+
+	/**
+	 * this method generates and authentication key to
+	 * send back to the user 
+	 * 
+	 * @return
+	 */
+	private String generateAuthKey() {
+		SecureRandom sRan = new SecureRandom();
+
+		String key = new BigInteger(130, sRan).toString(32);
+
+		return key;
 	}
 
 	/**
