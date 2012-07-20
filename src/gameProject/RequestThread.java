@@ -549,9 +549,16 @@ public class RequestThread extends Thread {
 		
 		//store it in the BD
 		
-		if(!updateDB("UPDATE games SET state = ? WHERE gameID = ?", compState, in[0])) {
-			log.log("problem inserting updating game in make move");
+		if(model.isOver(state)) {
+			if(!updateDB("UPDATE games SET state = ?,finished=? WHERE gameID = ?", compState, "1", in[0])) {
+				log.log("problem inserting updating game in make move");
+			}
+		} else {
+			if(!updateDB("UPDATE games SET state = ? WHERE gameID = ?", compState, in[0])) {
+				log.log("problem inserting updating game in make move");
+			}
 		}
+		
 		
 		//send it back to the user???????
 		sendMsg(compState);//MAYBE DONT DO

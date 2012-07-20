@@ -112,19 +112,17 @@ public class TileModel extends GameModel{
 		TileGameState s = (TileGameState) state;
 		
 		
-		int totalScore = 0;
-		
-		for(int points: s.scores.values()) {
-			totalScore = totalScore + points;
-		}
-		
-		if(totalScore == s.tiles.size()){
-			return true;
+		for(TileNode t: s.tiles.values()) {
+			if(!t.active) {
+				return false;
+			}
+			
+			
 		}
 
 		
 		
-		return false;
+		return true;
 	}
 
 	@Override
