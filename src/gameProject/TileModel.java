@@ -305,7 +305,7 @@ public class TileModel extends GameModel{
 		
 		ArrayList<Integer> userList = new ArrayList<Integer>(users);
 		
-		TileGameState state = new TileGameState(users, 9, 9);
+		TileGameState state = new TileGameState(users, 15, 7);
 	
 		for(int p: state.players) {
 			state.scores.put(p, 0);//start with scores set to 0
@@ -344,12 +344,12 @@ public class TileModel extends GameModel{
 		
 		for (TileNode n : pointToNode.values()) {
 			
-			checkNodeAddHash(n, n.tileX - 2, n.tileY + 0, pointToNode);
-			checkNodeAddHash(n, n.tileX - 1, n.tileY - 1, pointToNode);
+			checkNodeAddHash(n, n.tileX + 0, n.tileY -2, pointToNode);
 			checkNodeAddHash(n, n.tileX + 1, n.tileY - 1, pointToNode);
-			checkNodeAddHash(n, n.tileX + 2, n.tileY + 0, pointToNode);
 			checkNodeAddHash(n, n.tileX + 1, n.tileY + 1, pointToNode);
+			checkNodeAddHash(n, n.tileX + 0, n.tileY + 2, pointToNode);
 			checkNodeAddHash(n, n.tileX - 1, n.tileY + 1, pointToNode);
+			checkNodeAddHash(n, n.tileX - 1, n.tileY - 1, pointToNode);
 			
 
 		
