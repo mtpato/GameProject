@@ -198,7 +198,7 @@ public class RequestThread extends Thread {
 					handleRequest(msg);
 				} else {
 					try {
-						Thread.sleep(100);//CHECK THIS FIX
+						Thread.sleep(100);//this makes sure that the thread doesnt hog the CPU
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
