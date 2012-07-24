@@ -305,7 +305,7 @@ public class TileModel extends GameModel{
 		
 		ArrayList<Integer> userList = new ArrayList<Integer>(users);
 		
-		TileGameState state = new TileGameState(users, 15, 7);
+		TileGameState state = new TileGameState(users, 19, 7);
 	
 		for(int p: state.players) {
 			state.scores.put(p, 0);//start with scores set to 0

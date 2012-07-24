@@ -1499,3 +1499,5 @@ Time: 2012/07/19 18:05:59 | Class: class gameProject.GameServer | problem creati
 Time: 2012/07/19 18:06:37 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "keyLogin:mike,abg6737248ht9jtk1svm1n50ps" 
 Time: 2012/07/19 18:08:07 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "getState:150" 
 Time: 2012/07/21 20:08:02 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "signOut" 
+Time: 2012/07/23 16:58:43 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "signOut" 
+Time: 2012/07/23 21:15:29 | Class: class gameProject.RequestThread | SECURITY------INVALID MSG RECIEVED OVER SOCKET ---- CLOSING CON!!! msg "gameState:195" 

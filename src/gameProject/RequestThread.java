@@ -196,6 +196,13 @@ public class RequestThread extends Thread {
 					msg = in.readLine();
 
 					handleRequest(msg);
+				} else {
+					try {
+						Thread.sleep(100);//CHECK THIS FIX
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 
 			} catch (IOException e) {
