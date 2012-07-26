@@ -192,18 +192,16 @@ public class RequestThread extends Thread {
 		String msg;
 		while (socket.isConnected() && !quit) {
 			try {
-				if (in.ready()) {
-					msg = in.readLine();
 
+				msg = in.readLine();
+
+				
+				if(msg != null) {
 					handleRequest(msg);
 				} else {
-					try {
-						Thread.sleep(100);//this makes sure that the thread doesnt hog the CPU
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					quit = true;
 				}
+				
 
 			} catch (IOException e) {
 				log.log("problem reading line from socket. trace: "
