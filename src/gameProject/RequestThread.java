@@ -246,14 +246,18 @@ public class RequestThread extends Thread {
 
 		boolean validMsg = false;
 		
-		System.out.println("IN SERVER: " + msg);
+		
 
 		
 		//check signedIn boolean before doing anything but create user and login
 		if (parsedMsg[0].equals("quit")) {
+			System.out.println("IN SERVER: " + msg);
+			
 			quitGame();
 			validMsg = true;
 		} else if(!signedIn) {
+			System.out.println("IN SERVER: " + msg);
+			
 			if (parsedMsg[0].equals("keyLogin")) {
 				checkAuthKey(parsedMsg[1]);
 				validMsg = true;
@@ -265,6 +269,8 @@ public class RequestThread extends Thread {
 				validMsg = true;
 			}
 		} else if(signedIn) {
+			System.out.println("IN SERVER: " + userID + " - "+ msg);
+			
 			if (parsedMsg[0].equals("getGames")) {
 				getGames("");
 				validMsg = true;
