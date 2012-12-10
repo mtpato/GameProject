@@ -332,8 +332,7 @@ public class RequestThread extends Thread {
 			this.userID = userID;
 			signedIn = true;
 			
-			
-			sendMsg("done");// use done for all andshake
+			sendMsg("done:" + userID);// use done for all andshake
 
 		} else {
 			sendMsg("error");
@@ -827,7 +826,7 @@ public class RequestThread extends Thread {
 			
 			storeAuthKey(userID,authKey);
 			
-			sendMsg("done:" + authKey);// use done for all andshake
+			sendMsg("done:" + userID + ":" + authKey);// use done for all andshake
 
 		} else {
 			sendMsg("error");
