@@ -480,6 +480,7 @@ public class RequestThread extends Thread {
 			if (r.next()) {
 				System.out.println(r.getInt("gameID")); // return error user exists
 				gameID = r.getInt("gameID");
+				sendMsg("gameID:" + gameID);
 			}
 
 		} catch (SQLException e) {
