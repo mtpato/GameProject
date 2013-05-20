@@ -51,6 +51,7 @@ public class RequestThread extends Thread {
 
 	}
 	
+	
 	private Random rand = new Random();
 
 	public void run() {
@@ -58,7 +59,7 @@ public class RequestThread extends Thread {
 		
 		
 		initIO();
-		initDBCon("theGame", "212273625", "jdbc:mysql://localhost/tile");
+		initDBCon("theGame", "212273625", "jdbc:mysql://localhost/carwars");
 		
 		
 		sendMsg("done");//IO set up need to find game 	
@@ -68,17 +69,21 @@ public class RequestThread extends Thread {
 		
 		//sendMsg("done");
 		//while(model == null)
-		sendMsg("done");//let the client know that the connection was successful 
+		//sendMsg("Game is Created!");//let the client know that the connection was successful 
 		
 		
 		
 		listen();
+		
+		sendMsg("heard you!");
 		
 		//once game is quit
 		closeSocketCon();
 		closeDBCon();
 	}
 
+	
+	
 	private void findGame() {
 
 		String msg = null;
@@ -92,9 +97,9 @@ public class RequestThread extends Thread {
 						model = new TileModel();
 						System.out.println("made Tile Game Model");
 
-					} else if (msg.equals("whatever")) {
-						// some other games model
-						// this shoudl work great
+					} else if (msg.equals("carwarsGame")) {
+						model=new CarWarsModel();
+						System.out.println("car Wars is not finished!");
 					}
 
 				}
@@ -109,6 +114,9 @@ public class RequestThread extends Thread {
 		}
 
 	}
+	
+	
+	
 
 	private void closeSocketCon() {
         try {
@@ -189,14 +197,17 @@ public class RequestThread extends Thread {
      * 
      */
 	private void listen() {
+		
 		String msg;
+		//sendMsg("HAHA!");
 		while (socket.isConnected() && !quit) {
 			try {
-
+				
 				msg = in.readLine();
 
 				
 				if(msg != null) {
+					
 					handleRequest(msg);
 				} else {
 					quit = true;
@@ -794,7 +805,7 @@ public class RequestThread extends Thread {
 
 	/**
 	 * this method checks the login info if the info is worng is tells the
-	 * client there was a problem with the login info. if it is write it adds
+	 * client there was a problem with the login info. if it is right it adds
 	 * the userID to the current users and send confirmation that the con has
 	 * been made to the client.
 	 * 
