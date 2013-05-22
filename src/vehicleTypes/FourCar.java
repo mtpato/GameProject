@@ -1,4 +1,4 @@
-package gameProject.VehicleTypes;
+package vehicleTypes;
 
 import gameProject.Vehicle;
 

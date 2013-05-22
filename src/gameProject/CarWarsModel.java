@@ -2,16 +2,6 @@ package gameProject;
 
 
 
-import gameProject.VehicleTypes.EightCar;
-import gameProject.VehicleTypes.FiveCar;
-import gameProject.VehicleTypes.FourCar;
-import gameProject.VehicleTypes.NineCar;
-import gameProject.VehicleTypes.OneCar;
-import gameProject.VehicleTypes.SevenCar;
-import gameProject.VehicleTypes.SixCar;
-import gameProject.VehicleTypes.TenCar;
-import gameProject.VehicleTypes.ThreeCar;
-import gameProject.VehicleTypes.TwoCar;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,6 +9,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
+import vehicleTypes.EightCar;
+import vehicleTypes.FiveCar;
+import vehicleTypes.FourCar;
+import vehicleTypes.NineCar;
+import vehicleTypes.OneCar;
+import vehicleTypes.SevenCar;
+import vehicleTypes.SixCar;
+import vehicleTypes.TenCar;
+import vehicleTypes.ThreeCar;
+import vehicleTypes.TwoCar;
 
 
 public class CarWarsModel extends GameModel{
@@ -50,10 +51,7 @@ public class CarWarsModel extends GameModel{
 
 	
 	
-	
-	
-	
-	
+		
 	
 	@Override
 	protected boolean isOver(GameState state) {
@@ -128,6 +126,8 @@ public class CarWarsModel extends GameModel{
 			{
 			
 				Vehicle currentVehicle=s.vehicles.get(playerID+"-"+j);
+				
+				
 				
 				cs=cs+currentVehicle.health+","+
 						currentVehicle.speed+","+

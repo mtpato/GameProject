@@ -1,14 +1,14 @@
-package gameProject.VehicleTypes;
+package vehicleTypes;
 
 import gameProject.Vehicle;
 
-public class FiveCar extends Vehicle{
+public class SixCar extends Vehicle{
 	
 	int health=2;
-	int speed=5;
+	int speed=6;
 	
 	
-	public FiveCar(int owner, float xLocation, float yLocation,
+	public SixCar(int owner, float xLocation, float yLocation,
 			int orderInHand, float angle) 
 	{
 		super(owner,xLocation, yLocation, orderInHand, angle);

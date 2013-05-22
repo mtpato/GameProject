@@ -1,4 +1,4 @@
-package gameProject.VehicleTypes;
+package vehicleTypes;
 
 import gameProject.Vehicle;
 
@@ -7,6 +7,7 @@ public class OneCar extends Vehicle{
 	
 	int health=1;
 	int speed=1;
+	int oshcosh=10;
 	
 
 	
