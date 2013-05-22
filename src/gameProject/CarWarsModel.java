@@ -2,6 +2,17 @@ package gameProject;
 
 
 
+import gameProject.VehicleTypes.EightCar;
+import gameProject.VehicleTypes.FiveCar;
+import gameProject.VehicleTypes.FourCar;
+import gameProject.VehicleTypes.NineCar;
+import gameProject.VehicleTypes.OneCar;
+import gameProject.VehicleTypes.SevenCar;
+import gameProject.VehicleTypes.SixCar;
+import gameProject.VehicleTypes.TenCar;
+import gameProject.VehicleTypes.ThreeCar;
+import gameProject.VehicleTypes.TwoCar;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -117,10 +128,9 @@ public class CarWarsModel extends GameModel{
 			{
 			
 				Vehicle currentVehicle=s.vehicles.get(playerID+"-"+j);
-			
+				
 				cs=cs+currentVehicle.health+","+
 						currentVehicle.speed+","+
-						currentVehicle.VehicleType+","+
 						currentVehicle.xLocation+","+
 						currentVehicle.yLocation+","+
 						currentVehicle.orderInHand
@@ -237,10 +247,18 @@ public class CarWarsModel extends GameModel{
 		
 		for(int p: state.players) 
 		{
-			for(int j = 0; j < state.numVehicles; j++) 
-			{
-				state.vehicles.put(p+"-"+j,new Vehicle(p,(j+1),0,0,order[j]+1, 0));
-			}
+				
+				state.vehicles.put(p+"-"+1,new OneCar(p,0,0,order[0]+1, 0));
+				state.vehicles.put(p+"-"+2,new TwoCar(p,0,0,order[1]+1, 0));
+				state.vehicles.put(p+"-"+3,new ThreeCar(p,0,0,order[2]+1, 0));
+				state.vehicles.put(p+"-"+4,new FourCar(p,0,0,order[3]+1, 0));
+				state.vehicles.put(p+"-"+5,new FiveCar(p,0,0,order[4]+1, 0));
+				state.vehicles.put(p+"-"+6,new SixCar(p,0,0,order[5]+1, 0));
+				state.vehicles.put(p+"-"+7,new SevenCar(p,0,0,order[6]+1, 0));
+				state.vehicles.put(p+"-"+8,new EightCar(p,0,0,order[7]+1, 0));
+				state.vehicles.put(p+"-"+9,new NineCar(p,0,0,order[8]+1, 0));
+				state.vehicles.put(p+"-"+10,new TenCar(p,0,0,order[9]+1, 0));
+
 		}
 		
 		

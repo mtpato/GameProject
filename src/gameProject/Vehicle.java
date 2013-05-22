@@ -2,10 +2,10 @@ package gameProject;
 
 public class Vehicle{
 	
-	int health=0;
-	int speed=0;
+	int health;
+	int speed;
 	int owner;
-	int VehicleType;
+	
 	int orderInHand;
 	
 	float angle;
@@ -17,11 +17,10 @@ public class Vehicle{
 	boolean active=false;
 	
 	
-	public Vehicle(int owner,int VehicleType,float xLocation,float yLocation,int orderInHand,float angle) 
+	public Vehicle(int owner,float xLocation,float yLocation,int orderInHand,float angle) 
 	{
 		
 		this.owner = owner;
-		this.VehicleType=VehicleType;
 		this.xLocation=xLocation;
 		this.yLocation=yLocation;
 		this.orderInHand=orderInHand;
