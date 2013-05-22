@@ -67,15 +67,15 @@ public class RequestThread extends Thread {
 		findGame();
 
 		
-		//sendMsg("done");
+		sendMsg("done");
 		//while(model == null)
-		//sendMsg("Game is Created!");//let the client know that the connection was successful 
+		sendMsg("Game is Created!");//let the client know that the connection was successful 
 		
 		
 		
 		listen();
 		
-		sendMsg("heard you!");
+		//sendMsg("heard you!");
 		
 		//once game is quit
 		closeSocketCon();

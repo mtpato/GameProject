@@ -12,9 +12,7 @@ import java.util.Set;
 
 public class CarWarsModel extends GameModel{
 	
-	
 	Random rand = new Random();
-	
 	
 	@Override
 	protected GameState makeMove(GameState state, String move) {
@@ -178,7 +176,7 @@ public class CarWarsModel extends GameModel{
 		
 		System.out.println("CREATING GAME ");
 		
-		CarWarsGameState state = new CarWarsGameState(users, 100, 100,10);
+		CarWarsGameState state = new CarWarsGameState(users, 1, 1,10);
 		
 		for(int p: state.players) {
 			
@@ -234,8 +232,6 @@ public class CarWarsModel extends GameModel{
 	private void createVehicles(CarWarsGameState state) 
 	{
 		
-		
-		
 		Integer[] order =randomizeVector(state.numVehicles);
 		
 		
@@ -243,7 +239,7 @@ public class CarWarsModel extends GameModel{
 			
 			for(int j = 0; j < state.numVehicles; j++) {
 			
-			state.vehicles.put(p+"-"+j,new Vehicle(p,1000+(j+1),(j+1)+100,(j+1),0,0,order[j]+1, 0));
+				state.vehicles.put(p+"-"+j,new Vehicle(p,1000+(j+1),(j+1)+100,(j+1),0,0,order[j]+1, 0));
 			
 			}
 		}

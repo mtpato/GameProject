@@ -23,7 +23,7 @@ public class DBConner {
         
             
             /*
-            *CHECK THE comments ATER HERE 
+            *CHECK THE comments AFTER HERE 
             *get this into the server code 
             *
             *
