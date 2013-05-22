@@ -69,13 +69,13 @@ public class RequestThread extends Thread {
 		
 		sendMsg("done");
 		//while(model == null)
-		sendMsg("Game is Created!");//let the client know that the connection was successful 
+		//sendMsg("done");//let the client know that the connection was successful 
 		
 		
 		
 		listen();
 		
-		//sendMsg("heard you!");
+		
 		
 		//once game is quit
 		closeSocketCon();
@@ -199,7 +199,7 @@ public class RequestThread extends Thread {
 	private void listen() {
 		
 		String msg;
-		//sendMsg("HAHA!");
+		
 		while (socket.isConnected() && !quit) {
 			try {
 				

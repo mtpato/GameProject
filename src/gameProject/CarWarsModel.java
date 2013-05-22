@@ -235,12 +235,11 @@ public class CarWarsModel extends GameModel{
 		Integer[] order =randomizeVector(state.numVehicles);
 		
 		
-		for(int p: state.players) {
-			
-			for(int j = 0; j < state.numVehicles; j++) {
-			
-				state.vehicles.put(p+"-"+j,new Vehicle(p,1000+(j+1),(j+1)+100,(j+1),0,0,order[j]+1, 0));
-			
+		for(int p: state.players) 
+		{
+			for(int j = 0; j < state.numVehicles; j++) 
+			{
+				state.vehicles.put(p+"-"+j,new Vehicle(p,(j+1),0,0,order[j]+1, 0));
 			}
 		}
 		
