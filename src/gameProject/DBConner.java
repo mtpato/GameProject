@@ -16,7 +16,7 @@ public class DBConner {
         {
             String userName = "theGame";//game account user 
             String password = "212273625";//game account pass
-            String url = "jdbc:mysql://localhost/carwars";
+            String url = "jdbc:mysql://localhost/SSIdb";
             Class.forName ("com.mysql.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection (url, userName, password);
             System.out.println ("Database connection established");

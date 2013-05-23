@@ -57,8 +57,6 @@ public class Vehicle{
 			
 		};
 		
-
-		
 		if(type==vehicleType.TwoCar)
 		{
 			this.health=1;
@@ -162,6 +160,7 @@ public class Vehicle{
 	}
 	
 
+	//private class that defines the weapons attributes
 
 	private class Weapon
 	{

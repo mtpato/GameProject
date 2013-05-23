@@ -59,7 +59,7 @@ public class RequestThread extends Thread {
 		
 		
 		initIO();
-		initDBCon("theGame", "212273625", "jdbc:mysql://localhost/carwars");
+		initDBCon("theGame", "212273625", "jdbc:mysql://localhost/SSIdb");
 		
 		
 		sendMsg("done");//IO set up need to find game 	
