@@ -51,21 +51,17 @@ public class CarWarsModel extends GameModel{
 		CarWarsGameState s = (CarWarsGameState) state;
 		
 		
-		for(int i = 0; i < s.players.size(); i++)
+		for(int i: s.players)
 		{
 			int counter=0;
 			
-				for(int j = 0; j < s.numVehicles; j++)
-				{
-				
-					Vehicle currentVehicle=s.vehicles.get((i+1)+"-"+j);
+				for(Vehicle v:s.vehicles.values()){
 					
-					if(currentVehicle.active=true){counter=counter+1;};
-					
+					if(!v.active) counter=counter+1;
 					if(counter>s.numVehicles-1){return true;};
-
+					
+					}
 				
-				}
 			}
 		
 		
