@@ -12,16 +12,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import vehicleTypes.EightCar;
-import vehicleTypes.FiveCar;
-import vehicleTypes.FourCar;
-import vehicleTypes.NineCar;
-import vehicleTypes.OneCar;
-import vehicleTypes.SevenCar;
-import vehicleTypes.SixCar;
-import vehicleTypes.TenCar;
-import vehicleTypes.ThreeCar;
-import vehicleTypes.TwoCar;
 
 
 public class CarWarsModel extends GameModel{
