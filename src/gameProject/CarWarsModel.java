@@ -26,15 +26,16 @@ public class CarWarsModel extends GameModel{
 		List<String> items = Arrays.asList(move.split(";"));
 		
 		String moveID=items.get(0);
-		Float xlocation=Float.parseFloat(items.get(1));
-		Float ylocation=Float.parseFloat(items.get(2));
+		Double xlocation=Double.parseDouble(items.get(1));
+		Double ylocation=Double.parseDouble(items.get(2));
 		
-
+		
 		Vehicle moveVehicle = s.vehicles.get(moveID);
 		
-		moveVehicle.xLocation=xlocation;
-		moveVehicle.yLocation=ylocation;
-		moveVehicle.active=true;
+		
+	
+		moveVehicle.changeLocation(xlocation, ylocation);
+		moveVehicle.makeInactive();
 	
 		if(isOver(s)) s.over = true;
 		
@@ -100,29 +101,26 @@ public class CarWarsModel extends GameModel{
 		
 		String cs="";
 		
-		Iterator<Integer> it=s.players.iterator();
-		int playerID = 0;
-		
-		
-		for(int i = 0; i < s.players.size(); i++){
+
+		for(int i:s.players){
 			
-		playerID=it.next();
+			System.out.println(i);
 		
-		cs=cs+"{"+playerID+"}"+":";
+		cs=cs+"{"+i+"}"+";";
 		
-			for(int j = 0; j < s.numVehicles; j++) 
+			for(int j = 1; j < s.numVehicles+1; j++) 
 			{
 			
-				Vehicle currentVehicle=s.vehicles.get(playerID+"-"+j);
-				
+				Vehicle currentVehicle=s.vehicles.get(i+"-"+j);
 				
 				
 				cs=cs+currentVehicle.health+","+
 						currentVehicle.speed+","+
 						currentVehicle.xLocation+","+
 						currentVehicle.yLocation+","+
-						currentVehicle.orderInHand
-						+"-";
+						currentVehicle.orderInHand+","+
+						currentVehicle.angle
+						+";";
 						//System.out.println(cs);
 			
 			}
@@ -177,14 +175,14 @@ public class CarWarsModel extends GameModel{
 		CarWarsGameState state = new CarWarsGameState(users, 1, 1,10);
 		
 		for(int p: state.players) {
-			
 			state.scores.put(p, 0);//start with scores set to 0
-			
 		}
 
 		
 		//initialize the vehicles in the 
 		createVehicles(state);
+		
+		
 		
 		return state;
 	}

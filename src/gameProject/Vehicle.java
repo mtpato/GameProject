@@ -21,8 +21,8 @@ public class Vehicle{
 	int speed;//determines the order in which the vehicles fire at the end of the round
 	
 	
-	int numWeapons;
-	Weapon[] armament=new Weapon[numWeapons];
+	
+	Weapon[] armament=new Weapon[10];
 	
 	
 	
@@ -52,7 +52,7 @@ public class Vehicle{
 		{
 			this.health=1;
 			this.speed=1;
-			this.numWeapons=1;
+			
 			this.armament[0]=new Weapon(.4,.21212,2.0);
 			
 		};
@@ -61,7 +61,7 @@ public class Vehicle{
 		{
 			this.health=1;
 			this.speed=2;
-			this.numWeapons=1;
+			
 			this.armament[0]=new Weapon(.4,.21212,2.0);
 			
 		};
@@ -70,9 +70,9 @@ public class Vehicle{
 		{
 			this.health=1;
 			this.speed=3;
-			this.numWeapons=2;
+			
 			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
+			this.armament[1]=new Weapon(.4,.21212,2.0);
 			
 		};
 		
@@ -80,9 +80,9 @@ public class Vehicle{
 		{
 			this.health=2;
 			this.speed=4;
-			this.numWeapons=2;
+			
 			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
+			this.armament[1]=new Weapon(.4,.21212,2.0);
 			
 		};
 		
@@ -90,9 +90,9 @@ public class Vehicle{
 		{
 			this.health=2;
 			this.speed=5;
-			this.numWeapons=2;
+			
 			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
+			this.armament[1]=new Weapon(.4,.21212,2.0);
 			
 		};
 		
@@ -100,10 +100,10 @@ public class Vehicle{
 		{
 			this.health=2;
 			this.speed=6;
-			this.numWeapons=3;
+			
 			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
+			this.armament[1]=new Weapon(.4,.21212,2.0);
+			this.armament[2]=new Weapon(.4,.21212,2.0);
 			
 		};
 		
@@ -111,10 +111,10 @@ public class Vehicle{
 		{
 			this.health=3;
 			this.speed=7;
-			this.numWeapons=3;
+			
 			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
+			this.armament[1]=new Weapon(.4,.21212,2.0);
+			this.armament[2]=new Weapon(.4,.21212,2.0);
 			
 		};
 		
@@ -122,11 +122,11 @@ public class Vehicle{
 		{
 			this.health=3;
 			this.speed=8;
-			this.numWeapons=4;
+			
 			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
+			this.armament[1]=new Weapon(.4,.21212,2.0);
+			this.armament[2]=new Weapon(.4,.21212,2.0);
+			this.armament[3]=new Weapon(.4,.21212,2.0);
 			
 		};
 		
@@ -134,11 +134,11 @@ public class Vehicle{
 		{
 			this.health=4;
 			this.speed=9;
-			this.numWeapons=4;
+			
 			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
+			this.armament[1]=new Weapon(.4,.21212,2.0);
+			this.armament[2]=new Weapon(.4,.21212,2.0);
+			this.armament[3]=new Weapon(.4,.21212,2.0);
 			
 		};
 		
@@ -146,13 +146,13 @@ public class Vehicle{
 		{
 			this.health=5;
 			this.speed=10;
-			this.numWeapons=5
+			
 					;
 			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
-			this.armament[0]=new Weapon(.4,.21212,2.0);
+			this.armament[1]=new Weapon(.4,.21212,2.0);
+			this.armament[2]=new Weapon(.4,.21212,2.0);
+			this.armament[3]=new Weapon(.4,.21212,2.0);
+			this.armament[4]=new Weapon(.4,.21212,2.0);
 			
 		};
 		
@@ -178,6 +178,16 @@ public class Vehicle{
 		
 	}
 	
+	public void changeLocation(double xlocation,double ylocation)
+	{
+		this.xLocation=xlocation;
+		this.yLocation=ylocation;
+	}
+	
+	public void makeInactive()
+	{
+		this.active=false;
+	}
 	
 }
 
