@@ -12,21 +12,13 @@ public class Vehicle{
 	double xLocation;//where it is on map
 	double yLocation;//where it is on the map
 	
-	
-	
 	//the types of vehicles available
 	public enum vehicleType {OneCar,TwoCar,ThreeCar,FourCar,FiveCar,SixCar,SevenCar,EightCar,NineCar,TenCar};
 
 	int health;//How much damage a vehicle can sustain before it is destroyed
 	int speed;//determines the order in which the vehicles fire at the end of the round
 	
-	
-	
 	Weapon[] armament=new Weapon[10];
-	
-	
-	
-	
 	
 	//this determines the vehicle's type...that is, what weapons it has, what angles they fire at, health, speed etc..
 	vehicleType type;
@@ -47,6 +39,9 @@ public class Vehicle{
 		//attributes of different types are set when the vehicles is instantiated
 		//long term we may want separate classes, but this makes game logic much easier
 		//as long as vehicles don't have distinct attribute types this is better
+		
+		
+		//ultimately want to replace this with reference to external data source, like db or xml
 		
 		if(type==vehicleType.OneCar)
 		{

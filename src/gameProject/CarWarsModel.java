@@ -58,7 +58,7 @@ public class CarWarsModel extends GameModel{
 			
 				for(Vehicle v:s.vehicles.values()){
 					
-					if(!v.active) counter=counter+1;
+					if(v.active) counter=counter+1;
 					if(counter>s.numVehicles-1){return true;};
 					
 					}
