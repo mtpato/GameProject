@@ -8,7 +8,7 @@ public class Vehicle{
 	
 	int owner;//which player controls the vehicle
 	int orderInHand;//the order in which it must be played
-	float angle;//its angle with respect to the screen; will be used in determining hits
+	double angle;//its angle with respect to the screen; will be used in determining hits
 	double xLocation;//where it is on map
 	double yLocation;//where it is on the map
 	
@@ -18,6 +18,7 @@ public class Vehicle{
 	int health;//How much damage a vehicle can sustain before it is destroyed
 	int speed;//determines the order in which the vehicles fire at the end of the round
 	
+	//this is an array that holds the weapons
 	Weapon[] armament=new Weapon[10];
 	
 	//this determines the vehicle's type...that is, what weapons it has, what angles they fire at, health, speed etc..
@@ -27,7 +28,7 @@ public class Vehicle{
 	boolean active=false;
 	
 	//constructor
-	public Vehicle(int owner,vehicleType type, float xLocation,float yLocation,int orderInHand,float angle) 
+	public Vehicle(int owner,vehicleType type, double xLocation,double yLocation,int orderInHand,double angle) 
 	{
 		this.owner = owner;
 		this.type=type;
@@ -39,9 +40,6 @@ public class Vehicle{
 		//attributes of different types are set when the vehicles is instantiated
 		//long term we may want separate classes, but this makes game logic much easier
 		//as long as vehicles don't have distinct attribute types this is better
-		
-		
-		//ultimately want to replace this with reference to external data source, like db or xml
 		
 		if(type==vehicleType.OneCar)
 		{
@@ -173,16 +171,19 @@ public class Vehicle{
 		
 	}
 	
-	public void changeLocation(double xlocation,double ylocation)
+	public void changeLocation(double xlocation,double ylocation,double angle)
 	{
 		this.xLocation=xlocation;
 		this.yLocation=ylocation;
+		this.angle=angle;
 	}
 	
 	public void makeInactive()
 	{
 		this.active=false;
 	}
+	
+
 	
 }
 

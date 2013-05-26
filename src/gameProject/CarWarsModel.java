@@ -13,7 +13,6 @@ import java.util.Random;
 import java.util.Set;
 
 
-
 public class CarWarsModel extends GameModel{
 	
 	Random rand = new Random();
@@ -28,13 +27,13 @@ public class CarWarsModel extends GameModel{
 		String moveID=items.get(0);
 		Double xlocation=Double.parseDouble(items.get(1));
 		Double ylocation=Double.parseDouble(items.get(2));
-		
+		Double angle=Double.parseDouble(items.get(3));
 		
 		Vehicle moveVehicle = s.vehicles.get(moveID);
 		
 		
 	
-		moveVehicle.changeLocation(xlocation, ylocation);
+		moveVehicle.changeLocation(xlocation, ylocation,angle);
 		moveVehicle.makeInactive();
 	
 		if(isOver(s)) s.over = true;
@@ -83,6 +82,7 @@ public class CarWarsModel extends GameModel{
 		
 		
 		
+		
 		return null;
 	}
 
@@ -104,9 +104,9 @@ public class CarWarsModel extends GameModel{
 
 		for(int i:s.players){
 			
-			System.out.println(i);
+			
 		
-		cs=cs+"{"+i+"}"+";";
+		cs=cs+"|{"+i+"}"+";";
 		
 			for(int j = 1; j < s.numVehicles+1; j++) 
 			{
@@ -114,13 +114,14 @@ public class CarWarsModel extends GameModel{
 				Vehicle currentVehicle=s.vehicles.get(i+"-"+j);
 				
 				
-				cs=cs+currentVehicle.health+","+
+				cs=cs+currentVehicle.type+","+
+						currentVehicle.health+","+
 						currentVehicle.speed+","+
 						currentVehicle.xLocation+","+
 						currentVehicle.yLocation+","+
+						currentVehicle.angle+","+
 						currentVehicle.orderInHand+","+
-						currentVehicle.angle
-						+";";
+						";";
 						//System.out.println(cs);
 			
 			}
@@ -255,9 +256,6 @@ public class CarWarsModel extends GameModel{
 	
 	private Integer[] randomizeVector(int vecLength)
 	{
-		
-		
-		
 		Integer[] order=new Integer[vecLength];
 		
 		for(int j = 0; j < vecLength; j++) {	
@@ -274,5 +272,10 @@ public class CarWarsModel extends GameModel{
 		
 		return ids;
 	}
+	
+	
+	
+	
+	
 
 }
