@@ -127,8 +127,8 @@ public class CarWarsModel extends GameModel{
 		
 		String cs="";
 		
-
-		for(int i:s.players){
+		for(int i:s.players)
+		{
 			
 		cs=cs+"";
 		
@@ -162,18 +162,42 @@ public class CarWarsModel extends GameModel{
 	
 	
 	@Override
-	protected int winner(GameState state) {
+	protected int winner(GameState state) 
+	{
 		
-		// for k types of ships:
-			// find lowest numbers on the board
-			// fire their guns
-			// remove dead ships
-			// tally up points
+		//Set the state variable
+		CarWarsGameState s = (CarWarsGameState) state;
 		
+		//Main Loop goes through all possible values of speed
+		for(int k=1;k<11;k++) 
+		{
+			//Loop through all the vehicles and fire if current speed is the vehicle's speed
+			//shootWeapons routine will resolve making vehicles inactive when destroyed etc...
+			//shootWeapons will also add to the scores as necessary
+			for(int i:s.players)
+			{
+				for(int j = 1; j < s.numVehicles+1; j++) 
+				{
+					Vehicle currentVehicle=s.vehicles.get(i+"-"+j);
+					if(currentVehicle.speed==k){currentVehicle.shootWeapons();}
+				}	
+				
+			}
+			
+		}
 		
+		//check who has the highest score
+		Integer win=-99;
+		Integer max =-99;
 		
+		for(int player: s.scores.keySet()) {
+			if(s.scores.get(player) > max) {
+				win = player;
+			}
+		}
 		
-		return 0;
+		return win;
+		
 	}
 
 	
