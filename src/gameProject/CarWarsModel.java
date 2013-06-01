@@ -7,7 +7,7 @@ import gameProject.Vehicle.vehicleType;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -54,12 +54,9 @@ public class CarWarsModel extends GameModel{
 		for(int i: s.players)
 		{
 			int counter=0;
-			
 				for(Vehicle v:s.vehicles.values()){
-					
 					if(v.active) counter=counter+1;
 					if(counter>s.numVehicles-1){return true;};
-					
 					}
 				
 			}
@@ -79,11 +76,40 @@ public class CarWarsModel extends GameModel{
 	@Override
 	protected GameState parseGameState(String s) {
 		
+		//HashMap<String,String> arg = new HashMap<String,String>();
+		Set<Integer> playerIDs = new HashSet<Integer>();
+		String[] splitString = s.split(";");
+	
+		//need to generalize for any number of players
+		CarWarsGameState mystate = new CarWarsGameState(playerIDs,1,1,10);
+		
+		int counter=0;
+		
+		for(String line: splitString) 
+		{
+		
+			if(counter>9){counter=1;} else {counter=counter+1;}
+			//System.out.println(counter);
+			//System.out.println(line);
+			String[] temp = line.split(",");
+			playerIDs.add(Integer.parseInt(temp[0]));
+			
+			Integer currentID=Integer.parseInt(temp[0]);
+			vehicleType currentType=vehicleType.valueOf(temp[1]);
+			Double xlocation=Double.parseDouble(temp[2]);
+			Double ylocation=Double.parseDouble(temp[3]);
+			Integer orderInHand=Integer.parseInt(temp[4]);
+			Double angle=Double.parseDouble(temp[5]);
+			
+			mystate.vehicles.put(currentID+"-"+counter,new Vehicle(currentID,currentType,xlocation,ylocation,orderInHand, angle));
+			
+			
+		}
+
 		
 		
 		
-		
-		return null;
+		return mystate;
 	}
 
 	
@@ -104,9 +130,7 @@ public class CarWarsModel extends GameModel{
 
 		for(int i:s.players){
 			
-			
-		
-		cs=cs+"|{"+i+"}"+";";
+		cs=cs+"";
 		
 			for(int j = 1; j < s.numVehicles+1; j++) 
 			{
@@ -114,13 +138,12 @@ public class CarWarsModel extends GameModel{
 				Vehicle currentVehicle=s.vehicles.get(i+"-"+j);
 				
 				
-				cs=cs+currentVehicle.type+","+
-						currentVehicle.health+","+
-						currentVehicle.speed+","+
+				cs=cs+currentVehicle.owner+","+
+						currentVehicle.type+","+
 						currentVehicle.xLocation+","+
 						currentVehicle.yLocation+","+
-						currentVehicle.angle+","+
 						currentVehicle.orderInHand+","+
+						currentVehicle.angle+
 						";";
 						//System.out.println(cs);
 			
@@ -128,10 +151,6 @@ public class CarWarsModel extends GameModel{
 		
 		}
 	    
-		
-		
-		
-		
 		
 		return cs;
 	}
@@ -262,7 +281,7 @@ public class CarWarsModel extends GameModel{
 			order[j]=j;
 			}
 
-		System.out.println(order);
+
 		
 		Integer[] ids =order;
 		List<Integer> idList = Arrays.asList(ids);

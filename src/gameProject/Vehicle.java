@@ -13,7 +13,8 @@ public class Vehicle{
 	double yLocation;//where it is on the map
 	
 	//the types of vehicles available
-	public enum vehicleType {OneCar,TwoCar,ThreeCar,FourCar,FiveCar,SixCar,SevenCar,EightCar,NineCar,TenCar};
+	public enum vehicleType 
+	{OneCar,TwoCar,ThreeCar,FourCar,FiveCar,SixCar,SevenCar,EightCar,NineCar,TenCar};
 
 	int health;//How much damage a vehicle can sustain before it is destroyed
 	int speed;//determines the order in which the vehicles fire at the end of the round
