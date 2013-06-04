@@ -7,8 +7,12 @@ import gameProject.Vehicle.vehicleType;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
@@ -55,8 +59,10 @@ public class CarWarsModel extends GameModel{
 		{
 			int counter=0;
 				for(Vehicle v:s.vehicles.values()){
-					if(v.active) counter=counter+1;
+					
+					if(v.active && v.owner==i) counter=counter+1;
 					if(counter>s.numVehicles-1){return true;};
+					
 					}
 				
 			}
@@ -127,29 +133,21 @@ public class CarWarsModel extends GameModel{
 		
 		String cs="";
 		
-		for(int i:s.players)
-		{
-			
-		cs=cs+"";
+
 		
-			for(int j = 1; j < s.numVehicles+1; j++) 
+			for(Vehicle v:s.vehicles.values()) 
 			{
-			
-				Vehicle currentVehicle=s.vehicles.get(i+"-"+j);
-				
-				
-				cs=cs+currentVehicle.owner+","+
-						currentVehicle.type+","+
-						currentVehicle.xLocation+","+
-						currentVehicle.yLocation+","+
-						currentVehicle.orderInHand+","+
-						currentVehicle.angle+
+				cs=cs+v.owner+","+
+						v.type+","+
+						v.xLocation+","+
+						v.yLocation+","+
+						v.orderInHand+","+
+						v.angle+
 						";";
 						//System.out.println(cs);
-			
 			}
 		
-		}
+		
 	    
 		
 		return cs;
@@ -168,23 +166,7 @@ public class CarWarsModel extends GameModel{
 		//Set the state variable
 		CarWarsGameState s = (CarWarsGameState) state;
 		
-		//Main Loop goes through all possible values of speed
-		for(int k=1;k<11;k++) 
-		{
-			//Loop through all the vehicles and fire if current speed is the vehicle's speed
-			//shootWeapons routine will resolve making vehicles inactive when destroyed etc...
-			//shootWeapons will also add to the scores as necessary
-			for(int i:s.players)
-			{
-				for(int j = 1; j < s.numVehicles+1; j++) 
-				{
-					Vehicle currentVehicle=s.vehicles.get(i+"-"+j);
-					if(currentVehicle.speed==k){currentVehicle.shootWeapons();}
-				}	
-				
-			}
-			
-		}
+
 		
 		//check who has the highest score
 		Integer win=-99;
@@ -199,10 +181,11 @@ public class CarWarsModel extends GameModel{
 		return win;
 		
 	}
+	
+	
 
 	
-	
-	
+
 	
 	
 	
@@ -318,6 +301,8 @@ public class CarWarsModel extends GameModel{
 	
 	
 	
+	
+
 	
 	
 

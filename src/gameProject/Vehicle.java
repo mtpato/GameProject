@@ -1,5 +1,7 @@
 package gameProject;
 
+import java.util.HashMap;
+
 
 //Class that defines the cards that people play in the game
 
@@ -26,7 +28,7 @@ public class Vehicle{
 	vehicleType type;
 	
 	//whether it is in the hand or on the board
-	boolean active=false;
+	boolean active;
 	
 	//constructor
 	public Vehicle(int owner,vehicleType type, double xLocation,double yLocation,int orderInHand,double angle) 
@@ -37,7 +39,7 @@ public class Vehicle{
 		this.yLocation=yLocation;
 		this.orderInHand=orderInHand;
 		this.angle=angle;
-		
+		this.active=false;
 		//attributes of different types are set when the vehicles is instantiated
 		//long term we may want separate classes, but this makes game logic much easier
 		//as long as vehicles don't have distinct attribute types this is better
@@ -186,10 +188,7 @@ public class Vehicle{
 		this.active=false;
 	}
 	
-	public void shootWeapons()
-	{
-		this.active=false;
-	}
+
 	
 	
 }
