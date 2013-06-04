@@ -20,9 +20,10 @@ public class Vehicle{
 
 	int health;//How much damage a vehicle can sustain before it is destroyed
 	int speed;//determines the order in which the vehicles fire at the end of the round
+	double size;
 	
 	//this is an array that holds the weapons
-	Weapon[] armament=new Weapon[10];
+	HashMap<Integer,Weapon> weapons;
 	
 	//this determines the vehicle's type...that is, what weapons it has, what angles they fire at, health, speed etc..
 	vehicleType type;
@@ -40,6 +41,8 @@ public class Vehicle{
 		this.orderInHand=orderInHand;
 		this.angle=angle;
 		this.active=false;
+		this.size=.01;
+		this.weapons=new HashMap<Integer,Weapon>();
 		//attributes of different types are set when the vehicles is instantiated
 		//long term we may want separate classes, but this makes game logic much easier
 		//as long as vehicles don't have distinct attribute types this is better
@@ -49,7 +52,7 @@ public class Vehicle{
 			this.health=1;
 			this.speed=1;
 			
-			this.armament[0]=new Weapon(.4,.21212,2.0,1);
+			this.weapons.put(1, new Weapon(.4,0,2.0,1));
 			
 		};
 		
@@ -58,7 +61,7 @@ public class Vehicle{
 			this.health=1;
 			this.speed=2;
 			
-			this.armament[0]=new Weapon(.4,.21212,2.0,1);
+			this.weapons.put(1, new Weapon(.4,0,2.0,1));
 			
 		};
 		
@@ -67,8 +70,8 @@ public class Vehicle{
 			this.health=1;
 			this.speed=3;
 			
-			this.armament[0]=new Weapon(.4,.21212,2.0,1);
-			this.armament[1]=new Weapon(.4,.21212,2.0,1);
+			this.weapons.put(1, new Weapon(.4,0,2.0,1));
+			this.weapons.put(2, new Weapon(.4,0,2.0,1));
 			
 		};
 		
@@ -77,8 +80,7 @@ public class Vehicle{
 			this.health=2;
 			this.speed=4;
 			
-			this.armament[0]=new Weapon(.4,.21212,2.0,1);
-			this.armament[1]=new Weapon(.4,.21212,2.0,1);
+			this.weapons.put(1, new Weapon(.4,0,2.0,1));
 			
 		};
 		
@@ -87,8 +89,7 @@ public class Vehicle{
 			this.health=2;
 			this.speed=5;
 			
-			this.armament[0]=new Weapon(.4,.21212,2.0,1);
-			this.armament[1]=new Weapon(.4,.21212,2.0,1);
+			this.weapons.put(1, new Weapon(.4,0,2.0,1));
 			
 		};
 		
@@ -97,9 +98,7 @@ public class Vehicle{
 			this.health=2;
 			this.speed=6;
 			
-			this.armament[0]=new Weapon(.4,.21212,2.0,1);
-			this.armament[1]=new Weapon(.4,.21212,2.0,1);
-			this.armament[2]=new Weapon(.4,.21212,2.0,1);
+			this.weapons.put(1, new Weapon(.4,0,2.0,1));
 			
 		};
 		
@@ -108,9 +107,7 @@ public class Vehicle{
 			this.health=3;
 			this.speed=7;
 			
-			this.armament[0]=new Weapon(.4,.21212,2.0,1);
-			this.armament[1]=new Weapon(.4,.21212,2.0,1);
-			this.armament[2]=new Weapon(.4,.21212,2.0,1);
+			this.weapons.put(1, new Weapon(.4,0,2.0,1));
 			
 		};
 		
@@ -119,10 +116,7 @@ public class Vehicle{
 			this.health=3;
 			this.speed=8;
 			
-			this.armament[0]=new Weapon(.4,.21212,2.0,1);
-			this.armament[1]=new Weapon(.4,.21212,2.0,1);
-			this.armament[2]=new Weapon(.4,.21212,2.0,1);
-			this.armament[3]=new Weapon(.4,.21212,2.0,1);
+			this.weapons.put(1, new Weapon(.4,0,2.0,1));
 			
 		};
 		
@@ -131,10 +125,7 @@ public class Vehicle{
 			this.health=4;
 			this.speed=9;
 			
-			this.armament[0]=new Weapon(.4,.21212,2.0,1);
-			this.armament[1]=new Weapon(.4,.21212,2.0,1);
-			this.armament[2]=new Weapon(.4,.21212,2.0,1);
-			this.armament[3]=new Weapon(.4,.21212,2.0,1);
+			this.weapons.put(1, new Weapon(.4,0,2.0,1));
 			
 		};
 		
@@ -143,12 +134,8 @@ public class Vehicle{
 			this.health=5;
 			this.speed=10;
 			
-					;
-			this.armament[0]=new Weapon(.4,.21212,2.0,1);
-			this.armament[1]=new Weapon(.4,.21212,2.0,1);
-			this.armament[2]=new Weapon(.4,.21212,2.0,1);
-			this.armament[3]=new Weapon(.4,.21212,2.0,1);
-			this.armament[4]=new Weapon(.4,.21212,2.0,1);
+					
+			this.weapons.put(1, new Weapon(.4,0,2.0,1));
 			
 		};
 		
@@ -158,7 +145,7 @@ public class Vehicle{
 
 	//private class that defines the weapons attributes
 
-	private class Weapon
+	public class Weapon
 	{
 
 		double WeaponPosition;
@@ -187,6 +174,43 @@ public class Vehicle{
 	{
 		this.active=false;
 	}
+	
+	
+	
+	public void shootWeapons(CarWarsGameState s,Vehicle shooter)
+	{
+
+
+		
+
+		
+			//then through all weapons for that vehicle
+			for(Weapon w:shooter.weapons.values())
+			{
+				
+		
+				
+
+			}
+			
+		
+
+		
+	}
+	
+	
+	private double[] rotate(double x,double y, double angle)
+	{
+		
+		double[] coords = new double[2];
+		
+		coords[0]=x*Math.cos(angle)-y*Math.sin(angle);
+		coords[1]=x*Math.sin(angle)+y*Math.cos(angle);
+		
+		return coords;
+	}
+	
+
 	
 
 	

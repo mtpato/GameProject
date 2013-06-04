@@ -5,6 +5,7 @@ package gameProject;
 
 import gameProject.Vehicle.vehicleType;
 
+import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -166,7 +167,18 @@ public class CarWarsModel extends GameModel{
 		//Set the state variable
 		CarWarsGameState s = (CarWarsGameState) state;
 		
+		Rectangle2D.Double rect=new Rectangle2D.Double(0,0,1,1);
+		
+		for(int k=1;k<s.numVehicles;k++)
+		{
+			for(Vehicle v:s.vehicles.values())
+			{
+				
+				if(v.speed==k){v.shootWeapons(s,v);}
+				
+			}
 
+		}
 		
 		//check who has the highest score
 		Integer win=-99;
